@@ -18,7 +18,7 @@ const IntroSection = () => (
       <div className="h-full rounded-3xl overflow-hidden">
         {" "}
         <img
-          src="src/assets/pics/my-img.jpg"
+          src="/assets/pics/my-img.jpg"
           alt=""
           className="h-full object-cover"
         />
