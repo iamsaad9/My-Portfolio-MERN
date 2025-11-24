@@ -59,36 +59,23 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
       display: flex; /* Ensure front-content takes over */
     }
 
-    /* Back Gradient Rotation */
-    .back-gradient::before {
-      content: "";
-      width: 160px;
-      height: 160%;
-      position: absolute;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        #4f9bff,
-        #4f9bff,
-        #4f9bff,
-        transparent
-      );
-      /* Using a custom class for the animation */
-      animation: rotation_481 12000ms infinite linear;
-    }
-
-    @keyframes rotation_481 {
-      0% { transform: rotateZ(0deg); }
-      100% { transform: rotateZ(360deg); }
-    }
-
-    /* Floating Circles Animation */
-    @keyframes floating {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(10px); }
-      100% { transform: translateY(0px); }
-    }
-
+   .back-gradient {
+  border-radius: 0.75rem;
+}
+   
+.back-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* border thickness */
+  border-radius: inherit;
+  background: linear-gradient( #0c55b4, #9d69f5);
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
     .circle-anim {
       animation: floating 10s infinite linear;
     }
