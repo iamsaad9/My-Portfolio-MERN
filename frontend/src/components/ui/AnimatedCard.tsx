@@ -111,7 +111,7 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
                 }}
               ></div>
               <div
-                className="circle-anim absolute rounded-full bg-[#2108b3] w-[150px] h-[150px] relative"
+                className="circle-anim absolute rounded-full bg-[#110555] w-[150px] h-[150px] relative"
                 style={{
                   left: "50px",
                   top: "0px",

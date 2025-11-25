@@ -39,6 +39,9 @@ export const LayoutTextFlip = ({
             transition={{
               duration: 0.5,
             }}
+            style={{
+              fontWeight: "300",
+            }}
             className={cn("inline-block whitespace-nowrap")}
           >
             {words[currentIndex]}

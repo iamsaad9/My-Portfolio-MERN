@@ -3,7 +3,8 @@ import { Header } from "./components/NavBar";
 import IntroSection from "./components/IntroSection";
 import IntroSummary from "./components/IntroSummary";
 import SkillsSection from "./components/SkillsSection";
-import { HeroParallaxDemo } from "./components/ui/HeroParalax";
+import { HeroParallaxDemo } from "./components/HeroParalax";
+import Services from "./components/ServicesSection";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <IntroSection />
       <IntroSummary />
       <SkillsSection />
+      <Services />
       <HeroParallaxDemo />
     </div>
   );
