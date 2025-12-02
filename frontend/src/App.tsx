@@ -1,14 +1,16 @@
-import Hero from "./pages/Hero";
-import { Header } from "./components/NavBar";
-import IntroSection from "./components/IntroSection";
-import IntroSummary from "./components/IntroSummary";
-import SkillsSection from "./components/SkillsSection";
-import { HeroParallaxDemo } from "./components/HeroParalax";
-import Services from "./components/ServicesSection";
-import ProjectsHeading from "./components/ProjectHeading";
-import ProjectCarousel from "./components/ProjectCarousal";
-import ProjectsSection from "./components/Projects";
-import { AnimatedTestimonialsDemo } from "./components/Testimonials";
+import Hero from "./components/Sections/Hero";
+import { Header } from "./components/Sections/NavBar";
+import IntroSection from "./components/Sections/IntroSection";
+import IntroSummary from "./components/Sections/IntroSummary";
+import SkillsSection from "./components/Sections/SkillsSection";
+import { HeroParallaxDemo } from "./components/Sections/HeroParalax";
+import Services from "./components/Sections/ServicesSection";
+import ProjectsHeading from "./components/ui/ProjectHeading";
+import ProjectCarousel from "./components/Sections/ProjectCarousal";
+import ProjectsSection from "./components/Sections/Projects";
+import { AnimatedTestimonialsDemo } from "./components/Sections/Testimonials";
+import ContactForm from "./components/Sections/ContactSection";
+import Footer from "./components/Sections/Footer";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
       <ProjectCarousel />
       <ProjectsSection />
       <AnimatedTestimonialsDemo />
+      <ContactForm />
+      <Footer />
     </div>
   );
 }

@@ -8,7 +8,6 @@ interface AnimatedCardProps {
 export default function App({ frontContent, backContent }: AnimatedCardProps) {
   const customStyles = `
 
-  /* From Uiverse.io by milegelu */ 
 .container {
 
   background: #afafafa;
@@ -48,7 +47,6 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
       overflow: hidden;
     }
 
-    /* The Flip Logic (using the 'group' class on the container) */
     .card-container:hover .content-3d {
       transform: rotateY(180deg);
     }
@@ -85,7 +83,7 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
     <>
       <style>{customStyles}</style>
 
-      <div className="card-container w-60 h-80 relative group rounded-xl shadow-2xl shadow-gray-800 ">
+      <div className="card-container w-60 h-80 relative group rounded-xl shadow-2xl ">
         <div className="content-3d h-full w-full shadow-xl shadow-[#000000ee] rounded-xl  ">
           <div className="back-3d back-gradient flex justify-center items-center bg-[#151515] ">
             <div className="absolute inset-0 back-gradient rounded-xl" />
@@ -98,11 +96,11 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
           <div className="front-3d bg-[#151515] text-white">
             <div className="img absolute w-full h-full">
               <div
-                className="circle-anim absolute rounded-full bg-[#0c55b4] w-[90px] h-[90px] relative"
+                className="circle-anim  rounded-full bg-[#0c55b4] w-[90px] h-[90px] relative"
                 style={{ filter: "blur(15px)" }}
               ></div>
               <div
-                className="circle-anim absolute rounded-full bg-[#7d33a0] w-[30px] h-[30px] relative"
+                className="circle-anim  rounded-full bg-[#7d33a0] w-[30px] h-[30px] relative"
                 style={{
                   left: "160px",
                   top: "-80px",
@@ -111,7 +109,7 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
                 }}
               ></div>
               <div
-                className="circle-anim absolute rounded-full bg-[#110555] w-[150px] h-[150px] relative"
+                className="circle-anim  rounded-full bg-[#110555] w-[150px] h-[150px] relative"
                 style={{
                   left: "50px",
                   top: "0px",

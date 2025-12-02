@@ -14,7 +14,7 @@ export interface WavyBackgroundProps {
   blur?: number;
   speed?: "slow" | "fast";
   waveOpacity?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export const WavyBackground = ({
@@ -38,8 +38,8 @@ export const WavyBackground = ({
     nt: number,
     i: number,
     x: number,
-    ctx: any,
-    canvas: any;
+    ctx: CanvasRenderingContext2D | null,
+    canvas: HTMLCanvasElement | null;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const getSpeed = () => {
     switch (speed) {
