@@ -77,7 +77,7 @@ function Services() {
   //   ];
 
   return (
-    <div className="w-full py-10 mt-10 relative overflow-hidden">
+    <div id="services" className="w-full py-10 mt-10 relative overflow-hidden">
       <img
         loading="lazy"
         src="/images/brand_shape.png.webp"

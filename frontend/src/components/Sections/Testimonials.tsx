@@ -39,7 +39,10 @@ export function AnimatedTestimonialsDemo() {
     },
   ];
   return (
-    <div className="relative py-20 flex flex-col gap-5 w-full">
+    <div
+      id="testimonials"
+      className="relative py-20 flex flex-col gap-5 w-full"
+    >
       <BackgroundBeams />
       <AnimatedTestimonials testimonials={testimonials} />
     </div>

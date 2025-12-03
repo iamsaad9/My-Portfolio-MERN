@@ -11,10 +11,12 @@ import ProjectsSection from "./components/Sections/Projects";
 import { AnimatedTestimonialsDemo } from "./components/Sections/Testimonials";
 import ContactForm from "./components/Sections/ContactSection";
 import Footer from "./components/Sections/Footer";
+import ScrollUpButton from "./components/ui/ScrollUpButton";
 
 function App() {
   return (
     <div className="z-10">
+      <ScrollUpButton />
       <Header />
       <Hero />
       <IntroSection />

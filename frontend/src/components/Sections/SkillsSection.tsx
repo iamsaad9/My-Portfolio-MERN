@@ -91,6 +91,7 @@ const skills = [
 const SkillsSection = () => {
   return (
     <div
+      id="skills"
       className="flex items-center justify-center max-w-7xl mx-auto flex-col"
       style={{ fontFamily: "Lora, serif" }}
     >

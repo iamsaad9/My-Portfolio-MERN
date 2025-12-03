@@ -35,19 +35,20 @@ function ProjectsHeading() {
 
   return (
     <div
+      id="projects"
       ref={containerRef}
       className="w-full flex flex-col px-2 justify-center mb-10"
     >
       <motion.h1
         style={{ x: xRight, fontFamily: "Lora, serif" }}
-        className={`tracking-tighter text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase text-(--text)/70 self-start text-[#333333]`}
+        className={`tracking-tighter text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase self-start text-[var(--bg-secondary)]`}
       >
         Latest &
       </motion.h1>
 
       <motion.h1
         style={{ x: xLeft }}
-        className={`text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase text-(--text) self-end `}
+        className={`text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase  self-end `}
       >
         <GradientText
           text="Greatests"

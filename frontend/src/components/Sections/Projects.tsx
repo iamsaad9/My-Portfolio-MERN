@@ -8,7 +8,7 @@ import {
 import { FaGithub } from "react-icons/fa";
 import { SiVercel } from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import SuperToggleButton from "../ui/ProjectButton";
 
 const projects = [
   {
@@ -87,10 +87,8 @@ function ProjectsSection() {
               layout
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: -20 }}
               transition={{
                 duration: 0.2,
-                delay: index * 0.1,
                 layout: { duration: 0.2 },
               }}
               key={index}
@@ -215,48 +213,7 @@ function ProjectsSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
         >
-          <motion.button
-            onClick={() => setShowAll(!showAll)}
-            className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              initial={false}
-            />
-            <span className="relative z-10 flex items-center gap-2">
-              {showAll ? (
-                <>
-                  Show Less
-                  <motion.div
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <ChevronUp className="w-5 h-5" />
-                  </motion.div>
-                </>
-              ) : (
-                <>
-                  Show All Projects
-                  <motion.div
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <ChevronDown className="w-5 h-5" />
-                  </motion.div>
-                </>
-              )}
-            </span>
-          </motion.button>
+          <SuperToggleButton showAll={showAll} setShowAll={setShowAll} />
         </motion.div>
       )}
 

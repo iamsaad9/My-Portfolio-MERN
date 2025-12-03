@@ -65,6 +65,11 @@
 :root {
  --background: black;
   --foreground: white;
+  --bg-primary:#121212;
+  --bg-secondary:#333;
+  --theme_1:#3b82f6;
+  --theme_2:#a855f7;
+  --theme_3:#ec4899;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -138,6 +143,10 @@
   --color-3: oklch(69.6% 0.165 251);
   --color-4: oklch(80.2% 0.134 225);
   --color-5: oklch(90.7% 0.231 133);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @layer base {
