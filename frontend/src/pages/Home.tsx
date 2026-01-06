@@ -39,7 +39,7 @@ interface ServiceItem {
 interface About {
   bio: string;
   imageUrl: string;
-  resume: string;
+  resumeUrl: string;
 }
 
 const Home = () => {
