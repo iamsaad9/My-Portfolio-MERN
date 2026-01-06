@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { now } from "mongoose";
 
 //1- Create a schema
 //2- Create a model based of the schema
@@ -29,13 +29,19 @@ const projectSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    isSpecial: {
+      type: Boolean,
+      required: true,
+    },
     startedAt: {
       type: Date,
       required: true,
+      default: now(),
     },
     endedAt: {
       type: Date,
       required: false,
+      default: now(),
     },
   },
   { timestamps: true }

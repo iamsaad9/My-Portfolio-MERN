@@ -11,71 +11,17 @@ import {
 import { ThreeDCardDemo } from "../ui/3dCard";
 import { FlickeringGrid } from "../ui/shadcn-io/flickering-grid";
 
-function Services() {
-  //   const services = [
-  //     {
-  //       title: "Web Development",
-  //       description: ".",
-  //       image: "/images/Services/website.jpg",
-  //     },
-  //     {
-  //       title: "Web Applications",
-  //       description: ".",
-  //       image: "/images/Services/web_app.jpg",
-  //     },
-  //     {
-  //       title: "Portfolio Design",
-  //       description:
-  //         "Designing personalized and professional portfolio websites.",
-  //       image: "/images/Services/portfolio.jpg",
-  //     },
-  //   ];
-  //   const testCardData = [
-  //     {
-  //       cardTitle: "Floating Forest Retreat",
-  //       cardDescription:
-  //         "Experience tranquility by hovering over the digital forest. This card showcases stunning parallax effects.",
-  //       imageUrl:
-  //         "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       linkText: "View Gallery",
-  //       linkUrl: "https://example.com/gallery",
-  //       buttonText: "Book Now",
-  //       buttonClass: "bg-blue-600 dark:bg-blue-600 dark:text-white",
-  //     },
-  //     {
-  //       cardTitle: "The Digital Ocean",
-  //       cardDescription:
-  //         "Dive into the depths of modern UI design. A seamless blend of depth and motion for a captivating user experience.",
-  //       imageUrl:
-  //         "https://images.unsplash.com/photo-1510214040902-60195e33d4ac?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       linkText: "Learn More",
-  //       linkUrl: "https://example.com/details",
-  //       buttonText: "Discover",
-  //     },
-  //     {
-  //       cardTitle: "Abstract Geometric Art",
-  //       cardDescription:
-  //         "A testament to minimal yet dynamic design. Explore how simple shapes can create complex visual depth.",
-  //       imageUrl:
-  //         "https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       linkText: "Explore Project",
-  //       linkUrl: "https://example.com/project",
-  //       buttonText: "See Demo",
-  //       buttonClass: "bg-green-600 dark:bg-green-600 dark:text-white",
-  //     },
-  //     {
-  //       cardTitle: "Urban Nightscape",
-  //       cardDescription:
-  //         "Bringing the city lights to your screen. The perspective changes draw you right into the bustling metropolis.",
-  //       imageUrl:
-  //         "https://images.unsplash.com/photo-1515437877232-a5f1a56111f2?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       linkText: "Contact Us",
-  //       linkUrl: "https://example.com/contact",
-  //       buttonText: "Get Started",
-  //     },
-  //     // Add more items here if needed
-  //   ];
+interface ServicesProps {
+  services: ServiceItem[];
+}
 
+interface ServiceItem {
+  title: string;
+  description: string;
+  image: string;
+}
+
+function Services({ services }: ServicesProps) {
   return (
     <div id="services" className="w-full py-10 mt-10 relative overflow-hidden">
       <img
@@ -150,7 +96,7 @@ function Services() {
             className="w-full"
           >
             <CarouselContent>
-              {items.map((item, index) => (
+              {services.map((item, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
                     <ThreeDCardDemo item={item} />
@@ -168,36 +114,3 @@ function Services() {
 }
 
 export default Services;
-
-const items = [
-  {
-    title: "Website Development",
-    description: "Building responsive and dynamic websites frontends",
-    imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-  },
-  {
-    title: "Personal Portfolios",
-    description: "Designing personalized and professional portfolio websites",
-    imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-    buttonText: "Learn More",
-    linkText: "Get Started",
-    linkUrl: "/signup",
-  },
-  {
-    title: "Web Applications",
-    description: "Creating interactive Ui and frontend for web applications",
-    imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-    buttonText: "Learn More",
-    linkText: "Get Started",
-    linkUrl: "/signup",
-  },
-  {
-    title: "Landing Pages",
-    description:
-      "Developing high-converting landing pages for marketing campaigns",
-    imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-    buttonText: "Learn More",
-    linkText: "Get Started ->",
-    linkUrl: "/signup",
-  },
-];

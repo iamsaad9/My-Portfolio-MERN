@@ -1,7 +1,28 @@
 "use client";
+
+import { useEffect, useState, useRef } from "react";
 import { ChevronUp } from "lucide-react";
 
 export default function ScrollUpButton() {
+  const [visible, setVisible] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+
+      const passedThreshold = current > 300;
+      const scrollingUp = current < lastScrollY.current;
+
+      setVisible(passedThreshold && scrollingUp);
+
+      lastScrollY.current = current;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -9,15 +30,18 @@ export default function ScrollUpButton() {
   return (
     <>
       <button
-        className="button fixed right-5 bottom-5 z-50"
         onClick={scrollToTop}
+        className={`button fixed right-5 bottom-5 z-50 transition-all duration-300 ${
+          visible
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
       >
         <ChevronUp id="upIcon" className="animate-bounce" size={20} />
       </button>
 
       <style>{`
         .button {
-
           width: 40px;
           height: 40px;
           border-radius: 50%;
@@ -27,13 +51,11 @@ export default function ScrollUpButton() {
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0px 0px 0px 2px var(--theme_2);
+          box-shadow: 0px 0px 0px 2px var(--theme_1);
           cursor: pointer;
           transition-duration: 0.3s;
           overflow: hidden;
         }
-
-   
 
         .button:hover {
           width: 140px;
@@ -44,7 +66,7 @@ export default function ScrollUpButton() {
         }
 
         .button:hover #upIcon {
-          display:none;
+          display: none;
         }
 
         .button::before {

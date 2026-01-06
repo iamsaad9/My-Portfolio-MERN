@@ -2,7 +2,7 @@ import Skill from "../../models/Skill.js";
 
 export async function getAllSkills(req, res) {
   try {
-    const skills = await Skill.find().sort({ createdAt: -1 });
+    const skills = await Skill.find().sort({ createdAt: 1 });
     return res.status(200).json(skills);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -11,8 +11,8 @@ export async function getAllSkills(req, res) {
 
 export async function addSkill(req, res) {
   try {
-    const { name, description } = req.body;
-    const newSkill = new Skill({ name, description });
+    const { title, logo, description } = req.body;
+    const newSkill = new Skill({ title, logo, description });
     await newSkill.save();
     return res
       .status(201)
@@ -36,10 +36,10 @@ export async function deleteSkill(req, res) {
 
 export async function updateSkill(req, res) {
   try {
-    const { name, description } = req.body;
+    const { title, logo, description } = req.body;
     const skill = await Skill.findByIdAndUpdate(
       req.params.id,
-      { name, description },
+      { title, logo, description },
       { new: true }
     );
     if (!skill) {

@@ -183,3 +183,16 @@ html {
     transform: translate(-50%, -40%) scale(1);
   }
 }
+
+@layer utilities {
+  @media (min-height: 600px) {
+    .h-laptop {
+      height: 300vh;
+    }
+  }
+  @media (min-height: 800px) {
+    .h-monitor {
+      height: 250vh;
+    }
+  }
+}

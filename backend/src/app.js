@@ -1,22 +1,26 @@
+// dotenv.config({ path: "./src/.env" }); // MUST be first
+import "./loadEnv.js";
 import express from "express";
 import projectRoutes from "./routes/projectRoutes.js";
 import skillRoutes from "./routes/skillRoutes.js";
-import { connectDB } from "./config/db.js";
+import servicesRoutes from "./routes/servicesRoutes.js";
 import testimonialRoutes from "./routes/testimonialRoutes.js";
-import dotenv from "dotenv";
-
-dotenv.config({ path: "./src/.env" });
-
+import aboutRoutes from "./routes/aboutRoutes.js";
+import { connectDB } from "./config/db.js";
+import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ✅ Middleware to parse JSON request bodies
+// Middlewares
 app.use(express.json());
+app.use(cors());
 
-// ✅ Then use your routes
+// Routes
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/testimonial", testimonialRoutes);
+app.use("/api/services", servicesRoutes);
+app.use("/api/about", aboutRoutes);
 
 connectDB();
 

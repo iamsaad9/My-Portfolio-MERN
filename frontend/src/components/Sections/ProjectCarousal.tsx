@@ -6,14 +6,33 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ProjectCard from "../ui/ProjectCard";
-export default function ProjectCarousel() {
+
+interface Project {
+  title: string;
+  description: string;
+  gitHubLink?: string;
+  vercelLink?: string;
+  image: string;
+  isSpecial: boolean;
+  techStack: string[];
+  startedAt?: string;
+  endedAt?: string;
+}
+
+interface ProjectCarouselProps {
+  specialProjects: Project[];
+}
+
+export default function ProjectCarousel({
+  specialProjects,
+}: ProjectCarouselProps) {
   return (
     <div className="w-full p-10 flex justify-center">
       <Carousel className="w-full">
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {specialProjects.map((p, index) => (
             <CarouselItem key={index} className="">
-              <ProjectCard />
+              <ProjectCard project={p} />
             </CarouselItem>
           ))}
         </CarouselContent>

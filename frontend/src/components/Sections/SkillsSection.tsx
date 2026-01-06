@@ -1,94 +1,56 @@
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import AnimatedCard from "@/components/ui/AnimatedCard";
-import { FaReact, FaGithub, FaNode } from "react-icons/fa";
-import {
-  SiNextdotjs,
-  SiMongodb,
-  SiPostgresql,
-  SiJavascript,
-  SiExpress,
-  SiTypescript,
-} from "react-icons/si";
-import { TbBrandFramerMotion } from "react-icons/tb";
-import { RiTailwindCssFill } from "react-icons/ri";
-import { DiMysql } from "react-icons/di";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
+import * as CiIcons from "react-icons/ci";
+import * as SiIcons from "react-icons/si";
+import * as TbIcons from "react-icons/tb";
+import * as RiIcons from "react-icons/ri";
+import * as DiIcons from "react-icons/di";
+import type { IconType } from "react-icons";
 
-const skills = [
-  {
-    name: "JavaScript",
-    icon: <SiJavascript size={80} />,
-    description:
-      "Experienced in modern JavaScript (ES6+) for building interactive and dynamic web interfaces.",
-  },
-  {
-    name: "React",
-    icon: <FaReact size={80} />,
-    description:
-      "Skilled in building component-based UIs, managing state, and optimizing performance using React.",
-  },
-  {
-    name: "Next.js",
-    icon: <SiNextdotjs size={80} />,
-    description:
-      "Experienced with server-side rendering (SSR), static site generation (SSG), API routes, and full-stack Next.js apps.",
-  },
-  {
-    name: "TypeScript",
-    icon: <SiTypescript size={80} />,
-    description:
-      "Proficient in using TypeScript to enhance code quality, maintainability, and catch errors early in development.",
-  },
-  {
-    name: "Node.js",
-    icon: <FaNode size={80} />,
-    description:
-      "Proficient in building scalable backend services, RESTful APIs, and real-time applications using Node.js.",
-  },
-  {
-    name: "Express.js",
-    icon: <SiExpress size={80} />,
-    description:
-      "Adept at building robust and scalable RESTful APIs, handling routing, middleware, and integrating with databases using Express.js.",
-  },
-  {
-    name: "Tailwind CSS",
-    icon: <RiTailwindCssFill size={80} />,
-    description:
-      "Proficient in building responsive, modern UIs efficiently using Tailwind’s utility-first classes.",
-  },
-  {
-    name: "Framer Motion",
-    icon: <TbBrandFramerMotion size={80} />,
-    description:
-      "Capable of creating smooth animations, transitions, and motion effects to elevate user experience.",
-  },
-  {
-    name: "MongoDB",
-    icon: <SiMongodb size={80} />,
-    description:
-      "Experienced in designing NoSQL schemas, aggregations, and managing scalable database architectures.",
-  },
-  {
-    name: "PostgreSQL",
-    icon: <SiPostgresql size={80} />,
-    description:
-      "Skilled in relational database design, writing complex SQL queries, and database optimization.",
-  },
-  {
-    name: "MySQL",
-    icon: <DiMysql size={80} />,
-    description:
-      "Proficient in SQL database management, schema design, and ensuring data efficiency and integrity.",
-  },
-  {
-    name: "GitHub",
-    icon: <FaGithub size={80} />,
-    description:
-      "Experienced in version control, branching strategies, and collaborative development using Git and GitHub.",
-  },
-];
+type IconPack = Record<string, IconType>;
 
-const SkillsSection = () => {
+const iconPacks: Record<
+  "Fa" | "Ai" | "Ci" | "Si" | "Tb" | "Ri" | "Di",
+  IconPack
+> = {
+  Fa: FaIcons,
+  Ai: AiIcons,
+  Ci: CiIcons,
+  Si: SiIcons,
+  Tb: TbIcons,
+  Ri: RiIcons,
+  Di: DiIcons,
+};
+
+interface Skills {
+  title: string;
+  logo: string;
+  description: string;
+}
+
+interface SkillsSectionProps {
+  skills: Skills[];
+}
+
+const DynamicIcon = ({
+  iconName,
+  size = 70,
+}: {
+  iconName: string;
+  size?: number;
+}) => {
+  const prefix = iconName.slice(0, 2) as keyof typeof iconPacks;
+  const pack = iconPacks[prefix];
+
+  if (!pack) return null;
+
+  const Icon = pack[iconName];
+  return Icon ? <Icon size={size} /> : null;
+};
+
+const SkillsSection = ({ skills }: SkillsSectionProps) => {
   return (
     <div
       id="skills"
@@ -98,16 +60,18 @@ const SkillsSection = () => {
       <TextHoverEffect text="SKILLS" />
 
       <div className="w-[80%] grid grid-cols-3 gap-y-14 content-center place-items-center">
-        {skills.map((skill) => (
+        {skills.map((skill, index) => (
           <AnimatedCard
+            key={index}
             frontContent={
               <div className="flex flex-col gap-5 items-center justify-center h-full">
-                {skill.icon}
+                <DynamicIcon iconName={skill.logo} />
+
                 <span
                   className="text-3xl mb-4 text-center"
                   style={{ fontFamily: "Raleway, sans-serif" }}
                 >
-                  {skill.name}
+                  {skill.title}
                 </span>
               </div>
             }

@@ -6,7 +6,7 @@ interface ThreeDCardDemoProps {
   item: {
     title: string;
     description: string;
-    imageUrl: string;
+    image: string;
   };
 }
 export function ThreeDCardDemo({ item }: ThreeDCardDemoProps) {
@@ -25,7 +25,7 @@ export function ThreeDCardDemo({ item }: ThreeDCardDemoProps) {
         </CardItem>
         <CardItem translateZ="100" className="w-full mt-4">
           <img
-            src={item.imageUrl}
+            src={item.image}
             height="1000"
             width="1000"
             className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"

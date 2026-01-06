@@ -15,23 +15,21 @@ export async function createProject(req, res) {
     const {
       title,
       description,
-      image,
       gitHubLink,
       vercelLink,
+      isSpecial,
       techStack,
       startedAt,
       endedAt,
     } = req.body;
-    console.log(
-      title,
-      description,
-      image,
-      gitHubLink,
-      vercelLink,
-      techStack,
-      startedAt,
-      endedAt
-    );
+
+    const image = req.file?.path; // Cloudinary URL
+
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ error: "Image file is missing from the request" });
+    }
 
     const newProject = new Project({
       title,
@@ -39,13 +37,16 @@ export async function createProject(req, res) {
       image,
       gitHubLink,
       vercelLink,
+      isSpecial,
       techStack,
       startedAt,
       endedAt,
     });
 
     await newProject.save();
-    res.status(201).json({ message: "Project created scucessfully" });
+    res
+      .status(201)
+      .json({ message: "Project created successfully", newProject });
   } catch (error) {
     console.error("Error creating project:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -70,22 +71,26 @@ export async function updateProject(req, res) {
     const {
       title,
       description,
-      image,
       gitHubLink,
       vercelLink,
       techStack,
+      isSpecial,
       startedAt,
       endedAt,
     } = req.body;
+
+    // If new image uploaded, use Cloudinary URL
+    const image = req.file?.path;
 
     const updatedProject = await Project.findByIdAndUpdate(
       req.params.id,
       {
         title,
         description,
-        image,
+        image, // will update only if new image uploaded
         gitHubLink,
         vercelLink,
+        isSpecial,
         techStack,
         startedAt,
         endedAt,
@@ -97,12 +102,11 @@ export async function updateProject(req, res) {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    console.log("✅ Updated project:", updatedProject);
     res
       .status(200)
       .json({ message: "Project updated successfully", updatedProject });
   } catch (error) {
-    console.error("❌ Error updating project:", error);
+    console.error("Error updating project:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

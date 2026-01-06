@@ -10,65 +10,30 @@ import { SiVercel } from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
 import SuperToggleButton from "../ui/ProjectButton";
 
-const projects = [
-  {
-    title: "Tasty",
-    description:
-      "A modern food delivery app with a sleek UI and real-time order tracking functionality.",
-    image: "/assets/pics/project.png",
-    techStack: ["Web Application", "Next.js", "TypeScript", "Tailwind CSS"],
-    status: "Ongoing",
-  },
-  {
-    title: "My Weatherly",
-    description:
-      "A responsive weather application that provides current conditions and forecasts for any location.",
-    image: "/images/Projects/my_weatherly_1.jpg",
-    techStack: ["Web Application", "React", "JavaScript"],
-    status: "Pending",
-  },
-  {
-    title: "Portfolio",
-    description:
-      "A personal portfolio site showcasing projects and skills, built with Tailwind CSS and JavaScript.",
-    image: "/images/Projects/portfolio_1.png",
-    techStack: ["Portfolio", "Tailwind CSS", "JavaScript"],
-    status: "Completed",
-  },
-  {
-    title: "CakeShop",
-    description:
-      "A static multi-page website designed for a bakery or cake shop business.",
-    image: "/images/Projects/cakeshop_1.png",
-    techStack: ["Website", "Tailwind CSS", "JavaScript"],
-    status: "Pending",
-  },
-  {
-    title: "E-Commerce Platform",
-    description:
-      "A full-featured online shopping platform with cart management and payment integration.",
-    image: "/assets/pics/project.png",
-    techStack: ["Web Application", "React", "Node.js", "MongoDB"],
-    status: "Completed",
-  },
-  {
-    title: "Task Manager",
-    description:
-      "A productivity app for managing tasks, deadlines, and team collaboration.",
-    image: "/assets/pics/project.png",
-    techStack: ["Web Application", "Vue.js", "Firebase"],
-    status: "Ongoing",
-  },
-];
+interface Project {
+  title: string;
+  description: string;
+  gitHubLink?: string;
+  vercelLink?: string;
+  image: string;
+  isSpecial: boolean;
+  techStack: string[];
+  startedAt?: string;
+  endedAt?: string;
+}
 
-function ProjectsSection() {
+interface ProjectProps {
+  filteredProjects: Project[];
+}
+
+function ProjectsSection({ filteredProjects }: ProjectProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
 
   const INITIAL_DISPLAY = 4;
   const displayedProjects = showAll
-    ? projects
-    : projects.slice(0, INITIAL_DISPLAY);
+    ? filteredProjects
+    : filteredProjects.slice(0, INITIAL_DISPLAY);
 
   const handleToggle = (index: number | null) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -151,7 +116,7 @@ function ProjectsSection() {
                   </motion.div>
                 </div>
                 <div className="flex w-full items-center justify-between">
-                  <motion.span
+                  {/* <motion.span
                     className="text-xs md:text-sm flex items-center justify-center gap-2"
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -169,7 +134,7 @@ function ProjectsSection() {
                     >
                       {project.status}
                     </div>
-                  </motion.span>
+                  </motion.span> */}
 
                   <div className="flex gap-5 px-5 items-center justify-center">
                     <a href="">
@@ -206,7 +171,7 @@ function ProjectsSection() {
         </AnimatePresence>
       </motion.div>
 
-      {projects.length > INITIAL_DISPLAY && (
+      {filteredProjects.length > INITIAL_DISPLAY && (
         <motion.div
           className="flex justify-center mt-10"
           initial={{ opacity: 0, y: 20 }}
@@ -217,7 +182,7 @@ function ProjectsSection() {
         </motion.div>
       )}
 
-      {!showAll && projects.length > INITIAL_DISPLAY && (
+      {!showAll && filteredProjects.length > INITIAL_DISPLAY && (
         <motion.div
           className="text-center mt-6 text-gray-400"
           initial={{ opacity: 0 }}
@@ -225,7 +190,7 @@ function ProjectsSection() {
           transition={{ delay: 0.7 }}
         >
           <p className="text-sm">
-            Showing {INITIAL_DISPLAY} of {projects.length} projects
+            Showing {INITIAL_DISPLAY} of {filteredProjects.length} projects
           </p>
         </motion.div>
       )}
