@@ -9,17 +9,15 @@ import {
 } from "motion/react";
 
 export const HeroParallax = ({
-  products,
+  projects,
 }: {
-  products: {
-    title: string;
-    link: string;
+  projects: {
     thumbnail: string;
   }[];
 }) => {
-  const firstRow = products.slice(0, 5);
-  const secondRow = products.slice(5, 10);
-  const thirdRow = products.slice(10, 15);
+  const firstRow = projects.slice(0, 5);
+  const secondRow = projects.slice(5, 10);
+  const thirdRow = projects.slice(10, 15);
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -68,29 +66,29 @@ export const HeroParallax = ({
         className=""
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-          {firstRow.map((product) => (
-            <ProductCard
-              product={product}
+          {firstRow.map((project) => (
+            <ProjectCard
+              project={project}
               translate={translateX}
-              key={product.title}
+              key={project.thumbnail}
             />
           ))}
         </motion.div>
         <motion.div className="flex flex-row  mb-20 space-x-20 ">
-          {secondRow.map((product) => (
-            <ProductCard
-              product={product}
+          {secondRow.map((project) => (
+            <ProjectCard
+              project={project}
               translate={translateXReverse}
-              key={product.title}
+              key={project.thumbnail}
             />
           ))}
         </motion.div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((product) => (
-            <ProductCard
-              product={product}
+          {thirdRow.map((project) => (
+            <ProjectCard
+              project={project}
               translate={translateX}
-              key={product.title}
+              key={project.thumbnail}
             />
           ))}
         </motion.div>
@@ -116,13 +114,11 @@ export const Header = () => {
   );
 };
 
-export const ProductCard = ({
-  product,
+export const ProjectCard = ({
+  project,
   translate,
 }: {
-  product: {
-    title: string;
-    link: string;
+  project: {
     thumbnail: string;
   };
   translate: MotionValue<number>;
@@ -135,20 +131,16 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title}
-      className="group/product h-96 w-[30rem] relative shrink-0"
+      key={project.thumbnail}
+      className="group/project h-96 w-[30rem] relative shrink-0"
     >
       <img
-        src={product.thumbnail}
+        src={project.thumbnail}
         height="600"
         width="600"
         className="object-cover object-left-top absolute h-full w-full inset-0 cursor-pointer"
-        alt={product.title}
       />
       <div className="absolute inset-0 h-full w-full opacity-0  bg-black pointer-events-none"></div>
-      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-        {product.title}
-      </h2>
     </motion.div>
   );
 };

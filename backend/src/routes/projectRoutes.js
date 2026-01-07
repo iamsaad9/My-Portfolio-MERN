@@ -2,18 +2,18 @@ import express from "express";
 import {
   getAllProjects,
   getProjectById,
-  createProject,
+  addProject,
   deleteProject,
   updateProject,
 } from "../controllers/projectController.js";
-import { uploadImage } from "../middleware/upload.js";
+import { projectUpload } from "../middleware/upload.js";
 
 const router = express.Router();
 
 router.get("/", getAllProjects);
 router.get("/:id", getProjectById);
-router.post("/", uploadImage("projects").single("image"), createProject);
+router.post("/", projectUpload, addProject);
 router.delete("/:id", deleteProject);
-router.put("/:id", uploadImage("projects").single("image"), updateProject);
+router.put("/:id", projectUpload, updateProject);
 
 export default router;

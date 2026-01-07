@@ -11,7 +11,7 @@ const projectSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     gitHubLink: {
       type: String,
@@ -27,19 +27,19 @@ const projectSchema = new mongoose.Schema(
     },
     images: {
       type: [String],
-      required: false,
+      required: true,
     },
     techStack: {
       type: [String],
-      required: true,
+      required: false,
     },
     isSpecial: {
       type: Boolean,
-      required: true,
+      required: false,
     },
     startedAt: {
       type: Date,
-      required: true,
+      required: false,
       default: now(),
     },
     endedAt: {
@@ -48,7 +48,7 @@ const projectSchema = new mongoose.Schema(
       default: now(),
     },
   },
-  { timestamps: true }
+  { timestamps: false }
 );
 
 const Project = mongoose.model("Project", projectSchema);

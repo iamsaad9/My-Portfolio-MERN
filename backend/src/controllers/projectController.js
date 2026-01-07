@@ -1,4 +1,5 @@
 import Project from "../../models/Project.js";
+import { uploadToAppwrite } from "../utils/appwriteUpload.js";
 
 export async function getAllProjects(req, res) {
   try {
@@ -10,7 +11,7 @@ export async function getAllProjects(req, res) {
   }
 }
 
-export async function createProject(req, res) {
+export async function addProject(req, res) {
   try {
     const {
       title,
@@ -23,36 +24,49 @@ export async function createProject(req, res) {
       endedAt,
     } = req.body;
 
-    const image = req.file?.path; // Cloudinary URL
-
-    if (!req.file) {
-      return res
-        .status(400)
-        .json({ error: "Image file is missing from the request" });
+    // 1. Check if coverImage exists (Multer fields puts it in req.files.coverImage)
+    if (!req.files || !req.files.coverImage) {
+      return res.status(400).json({ error: "Cover image is required" });
     }
 
+    // 2. Upload Cover Image (Single)
+    // We pass req.files.coverImage[0] to get the single file object
+    const coverImageUrl = await uploadToAppwrite(req.files.coverImage[0]);
+
+    // 3. Upload Project Images (Multiple)
+    let projectImagesUrls = [];
+    if (req.files.images && req.files.images.length > 0) {
+      // Pass the whole array to our updated function
+      projectImagesUrls = await uploadToAppwrite(req.files.images);
+    }
+
+    // 4. Save to Database
     const newProject = new Project({
       title,
       description,
-      image,
+      coverImage: coverImageUrl, // Use the URL from Appwrite
+      images: projectImagesUrls, // Use the Array of URLs
       gitHubLink,
       vercelLink,
-      isSpecial,
-      techStack,
+      isSpecial: isSpecial === "true", // Multer sends strings; convert to boolean if needed
+      techStack: Array.isArray(techStack) ? techStack : techStack?.split(","), // Handle string/array input
       startedAt,
       endedAt,
     });
 
     await newProject.save();
-    res
-      .status(201)
-      .json({ message: "Project created successfully", newProject });
+
+    res.status(201).json({
+      message: "Project created successfully",
+      newProject,
+    });
   } catch (error) {
     console.error("Error creating project:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 }
-
 export async function deleteProject(req, res) {
   try {
     const deletedProject = await Project.findByIdAndDelete(req.params.id);

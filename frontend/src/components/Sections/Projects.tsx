@@ -15,7 +15,8 @@ interface Project {
   description: string;
   gitHubLink?: string;
   vercelLink?: string;
-  image: string;
+  coverImage: string;
+  images: string[];
   isSpecial: boolean;
   techStack: string[];
   startedAt?: string;
@@ -63,7 +64,7 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
             >
               <motion.img
                 loading="lazy"
-                src={project.image}
+                src={project.coverImage}
                 alt={project.title}
                 className="w-full h-full opacity-50 object-cover"
                 whileHover={{ scale: 1.05 }}

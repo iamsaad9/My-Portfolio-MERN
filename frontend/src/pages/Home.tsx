@@ -11,13 +11,15 @@ import { AnimatedTestimonialsDemo } from "@/components/Sections/Testimonials";
 import ProjectsHeading from "@/components/ui/ProjectHeading";
 import ScrollUpButton from "@/components/ui/ScrollUpButton";
 import { useEffect, useState } from "react";
+import { da } from "zod/v4/locales";
 
 interface Project {
   title: string;
   description: string;
   gitHubLink?: string;
   vercelLink?: string;
-  image: string;
+  coverImage: string;
+  images: string[];
   isSpecial: boolean;
   techStack: string[];
   startedAt?: string;
@@ -42,9 +44,14 @@ interface About {
   resumeUrl: string;
 }
 
+interface ProjectImages {
+  thumbnail: string;
+}
+
 const Home = () => {
   const [skills, setSkills] = useState<Skills[]>([]);
   const [allProjects, setAllProjects] = useState<Project[]>([]);
+  const [projectImages, setProjectImages] = useState<ProjectImages[]>([]);
   const [specialProjects, setSpecialProjects] = useState<Project[]>([]);
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [about, setAbout] = useState<About>();
@@ -66,6 +73,16 @@ const Home = () => {
     return projects.filter((p) => !p.isSpecial);
   };
 
+  const getProjectImages = (projects: any[]): ProjectImages[] => {
+    return projects.flatMap((project) => {
+      // Combine coverImage and the images array into one flat list of objects
+      const allUrls = [project.coverImage, ...project.images];
+
+      return allUrls.map((url) => ({
+        thumbnail: url, // Wrap each URL in the object structure required
+      }));
+    });
+  };
   const filterSpecialProjects = (projects: Project[]) => {
     return projects.filter((p) => p.isSpecial);
   };
@@ -79,6 +96,8 @@ const Home = () => {
       const specialProjects = filterSpecialProjects(data);
       setAllProjects(filteredProjects);
       setSpecialProjects(specialProjects);
+      setProjectImages(getProjectImages(data));
+      console.log("Project images:", getProjectImages(data));
     } catch (error) {
       console.log("Error fetching projects:", error);
     }
@@ -120,7 +139,7 @@ const Home = () => {
       <IntroSection about={about} />
       <IntroSummary />
       <SkillsSection skills={skills} />
-      <HeroParallaxDemo />
+      <HeroParallaxDemo projects={projectImages} />
       <Services services={services} />
       <ProjectsHeading />
       <ProjectCarousel specialProjects={specialProjects} />

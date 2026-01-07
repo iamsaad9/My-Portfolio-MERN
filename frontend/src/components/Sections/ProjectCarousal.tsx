@@ -12,7 +12,8 @@ interface Project {
   description: string;
   gitHubLink?: string;
   vercelLink?: string;
-  image: string;
+  coverImage: string;
+  images: string[];
   isSpecial: boolean;
   techStack: string[];
   startedAt?: string;
