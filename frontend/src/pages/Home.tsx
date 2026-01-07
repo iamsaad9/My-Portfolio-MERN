@@ -11,7 +11,6 @@ import { AnimatedTestimonialsDemo } from "@/components/Sections/Testimonials";
 import ProjectsHeading from "@/components/ui/ProjectHeading";
 import ScrollUpButton from "@/components/ui/ScrollUpButton";
 import { useEffect, useState } from "react";
-import { da } from "zod/v4/locales";
 
 interface Project {
   title: string;
@@ -48,6 +47,13 @@ interface ProjectImages {
   thumbnail: string;
 }
 
+interface Testimonial {
+  name: string;
+  testimonial: string;
+  image: string;
+  designation: string;
+}
+
 const Home = () => {
   const [skills, setSkills] = useState<Skills[]>([]);
   const [allProjects, setAllProjects] = useState<Project[]>([]);
@@ -55,6 +61,7 @@ const Home = () => {
   const [specialProjects, setSpecialProjects] = useState<Project[]>([]);
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [about, setAbout] = useState<About>();
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   //Fetching skills from the backend
   const fetchSkills = async () => {
@@ -73,9 +80,8 @@ const Home = () => {
     return projects.filter((p) => !p.isSpecial);
   };
 
-  const getProjectImages = (projects: any[]): ProjectImages[] => {
+  const getProjectImages = (projects: Project[]): ProjectImages[] => {
     return projects.flatMap((project) => {
-      // Combine coverImage and the images array into one flat list of objects
       const allUrls = [project.coverImage, ...project.images];
 
       return allUrls.map((url) => ({
@@ -125,11 +131,23 @@ const Home = () => {
     }
   };
 
+  const fetchTestimonials = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/testimonials");
+      const data = await res.json();
+      console.log("Fetched testimonials:", data);
+      setTestimonials(data);
+    } catch (error) {
+      console.log("Error fetching testimonials:", error);
+    }
+  };
+
   useEffect(() => {
     fetchProjects();
     fetchSkills();
     fetchServices();
     fetchAbout();
+    fetchTestimonials();
   }, []);
 
   return (
@@ -144,7 +162,7 @@ const Home = () => {
       <ProjectsHeading />
       <ProjectCarousel specialProjects={specialProjects} />
       <ProjectsSection filteredProjects={allProjects} />
-      <AnimatedTestimonialsDemo />
+      <AnimatedTestimonialsDemo testimonials={testimonials} />
       <ContactForm />
     </div>
   );

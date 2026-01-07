@@ -2,16 +2,17 @@
 
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "motion/react";
-
+import "../../index.css";
 import { useEffect, useState } from "react";
 import Shuffle from "./shadcn-io/shuffle";
 
-type Testimonial = {
-  quote: string;
+interface Testimonial {
   name: string;
+  testimonial: string;
+  image: string;
   designation: string;
-  src: string;
-};
+}
+
 export const AnimatedTestimonials = ({
   testimonials,
   autoplay = false,
@@ -43,6 +44,10 @@ export const AnimatedTestimonials = ({
   const randomRotateY = () => {
     return Math.floor(Math.random() * 21) - 10;
   };
+
+  if (testimonials.length === 0) {
+    return null;
+  }
   return (
     <div className=" mx-auto max-w-sm px-4 py-10 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
       <div className=" flex justify-between items-center text-center mb-10 ">
@@ -83,7 +88,7 @@ export const AnimatedTestimonials = ({
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
-                  key={testimonial.src}
+                  key={testimonial.image}
                   initial={{
                     opacity: 0,
                     scale: 0.9,
@@ -113,7 +118,7 @@ export const AnimatedTestimonials = ({
                   className="absolute inset-0 origin-bottom"
                 >
                   <img
-                    src={testimonial.src}
+                    src={testimonial.image}
                     alt={testimonial.name}
                     width={500}
                     height={500}
@@ -151,30 +156,35 @@ export const AnimatedTestimonials = ({
             <p className="text-sm text-gray-500 dark:text-neutral-500">
               {testimonials[active].designation}
             </p>
-            <motion.p className="mt-8 text-lg text-white dark:text-neutral-300">
-              {testimonials[active].quote.split(" ").map((word, index) => (
-                <motion.span
-                  key={index}
-                  initial={{
-                    filter: "blur(10px)",
-                    opacity: 0,
-                    y: 5,
-                  }}
-                  animate={{
-                    filter: "blur(0px)",
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                    ease: "easeInOut",
-                    delay: 0.02 * index,
-                  }}
-                  className="inline-block"
-                >
-                  {word}&nbsp;
-                </motion.span>
-              ))}
+            <motion.p
+              id="feedbackDiv"
+              className="mt-8 h-40 overflow-auto text-lg text-white dark:text-neutral-300"
+            >
+              {testimonials[active].testimonial
+                .split(" ")
+                .map((word, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{
+                      filter: "blur(10px)",
+                      opacity: 0,
+                      y: 5,
+                    }}
+                    animate={{
+                      filter: "blur(0px)",
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      duration: 0.2,
+                      ease: "easeInOut",
+                      delay: 0.02 * index,
+                    }}
+                    className="inline-block"
+                  >
+                    {word}&nbsp;
+                  </motion.span>
+                ))}
             </motion.p>
           </motion.div>
           <div className="flex gap-4 pt-12 md:pt-0">

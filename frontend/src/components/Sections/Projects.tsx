@@ -137,33 +137,33 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                     </div>
                   </motion.span> */}
 
-                  <div className="flex gap-5 px-5 items-center justify-center">
-                    <a href="">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
+                  <div className="flex gap-5 px-5 items-center justify-center ">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a href="">
                           <FaGithub
                             size={20}
                             className="hover:scale-110 transition-all duration-200"
                           />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>GitHub</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </a>
-                    <a href="">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>GitHub</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a href="">
                           <SiVercel
                             size={20}
                             className="hover:scale-110 transition-all duration-200"
                           />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Vercel</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </a>
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Vercel</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 </div>
               </motion.div>

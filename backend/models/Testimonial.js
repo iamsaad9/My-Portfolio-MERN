@@ -6,6 +6,14 @@ const testimonialSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    designation: {
+      type: String,
+      required: false,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
     testimonial: {
       type: String,
       required: true,

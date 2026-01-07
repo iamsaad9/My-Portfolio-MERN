@@ -1,110 +1,127 @@
-import { GoProjectRoadmap } from "react-icons/go";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+// import API from "../../api/axios";
+
+import { GoProjectRoadmap, GoHome } from "react-icons/go";
 import { MdCall } from "react-icons/md";
 import { LiaProjectDiagramSolid } from "react-icons/lia";
-import { GoHome } from "react-icons/go";
 import { CiPalette } from "react-icons/ci";
 import { LuMessageSquareQuote } from "react-icons/lu";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipProvider,
 } from "@/components/ui/tooltip";
 
 export const Header = () => {
+  const auth = useContext(AuthContext);
+  const user = auth?.user;
+  // const setUser = auth?.setUser;
+
+  const googleLogin = () => {
+    window.location.href = "http://localhost:3000/auth/google";
+  };
+
+  const handleLogout = async () => {
+    // try {
+    //   await API.get("/auth/logout");
+    //   if (setUser) setUser(null);
+    //   window.location.href = "/";
+    // } catch (err) {
+    //   console.error("Logout failed", err);
+    // }
+  };
+
   return (
-    <div className="flex justify-center">
-      <nav
-        className="  mx-auto rounded-full border my-2 fixed flex justify-center items-center  z-50"
-        style={{ backdropFilter: "blur(30px)" }}
-      >
-        <ul>
-          <li className="flex gap-5 p-1 px-5">
-            <a
-              href="/"
-              className="text-md p-3  cursor-pointer hover:scale-115 transition-all duration-200"
-            >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <GoHome size={20} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Home</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
+    <TooltipProvider>
+      <div className="flex justify-center w-full">
+        <nav
+          className="mx-auto rounded-full border border-white/20 my-4 fixed flex items-center z-50 bg-black/20 shadow-xl"
+          style={{ backdropFilter: "blur(20px)" }}
+        >
+          <ul className="flex items-center gap-1 p-1.5 px-4">
+            {/* 1. USER PROFILE SECTION (Only shows if logged in) */}
+            {user && (
+              <li className="flex items-center gap-2 pr-4 mr-2 border-r border-white/10">
+                <img
+                  src={user.avatar}
+                  className="w-7 h-7 rounded-full border border-white/20"
+                  alt="avatar"
+                />
+                <span className="text-xs font-medium text-white/80 hidden sm:block">
+                  {user.username}
+                </span>
+              </li>
+            )}
 
-            <a
-              href="#skills"
-              className="text-md p-3  cursor-pointer hover:scale-115 transition-all duration-200 "
-            >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <LiaProjectDiagramSolid size={20} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Skills</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
+            {/* 2. NAVIGATION LINKS */}
+            {[
+              { href: "/", icon: <GoHome size={19} />, label: "Home" },
+              {
+                href: "#skills",
+                icon: <LiaProjectDiagramSolid size={19} />,
+                label: "Skills",
+              },
+              {
+                href: "#services",
+                icon: <CiPalette size={19} />,
+                label: "Services",
+              },
+              {
+                href: "#projects",
+                icon: <GoProjectRoadmap size={19} />,
+                label: "Projects",
+              },
+              {
+                href: "#testimonials",
+                icon: <LuMessageSquareQuote size={19} />,
+                label: "Testimonials",
+              },
+              {
+                href: "#contact",
+                icon: <MdCall size={19} />,
+                label: "Contact",
+              },
+            ].map((item, idx) => (
+              <li key={idx}>
+                <a
+                  href={item.href}
+                  className="p-2.5 rounded-full block cursor-pointer hover:bg-white/10 hover:scale-110 transition-all duration-200 text-white/70 hover:text-white"
+                >
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>{item.icon}</span>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">
+                      <p>{item.label}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </a>
+              </li>
+            ))}
 
-            <a
-              href="#services"
-              className="text-md p-3  cursor-pointer hover:scale-115 transition-all duration-200 "
-            >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <CiPalette size={20} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Services</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
-
-            <a
-              href="#projects"
-              className="text-md p-3  cursor-pointer hover:scale-115 transition-all duration-200 "
-            >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <GoProjectRoadmap size={20} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Projects</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
-
-            <a
-              href="#testimonials"
-              className="text-md p-3  cursor-pointer hover:scale-115 transition-all duration-200 "
-            >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <LuMessageSquareQuote size={20} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Testimonials</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
-
-            <a
-              href="#contact"
-              className="text-md p-3  cursor-pointer hover:scale-115 transition-all duration-200 "
-            >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <MdCall size={20} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Contact</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+            {/* 3. AUTH BUTTON SECTION */}
+            <li className="ml-2 pl-3 border-l border-white/10">
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="text-[11px] uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white px-4 py-2 rounded-full transition-all border border-red-500/30"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  onClick={googleLogin}
+                  className="text-[11px] uppercase tracking-wider font-bold bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-all"
+                >
+                  Login
+                </button>
+              )}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </TooltipProvider>
   );
 };
