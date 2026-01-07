@@ -21,8 +21,12 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    image: {
+    coverImage: {
       type: String,
+      required: true,
+    },
+    images: {
+      type: [String],
       required: false,
     },
     techStack: {
