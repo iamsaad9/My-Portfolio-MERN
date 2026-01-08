@@ -16,6 +16,7 @@ const strategyCallback = async (accessToken, refreshToken, profile, done) => {
 
     if (!user) {
       user = await User.create({
+        name: profile.displayName,
         username: profile.displayName,
         email: profile.emails[0].value,
         googleId: profile.provider === "google" ? profile.id : null,

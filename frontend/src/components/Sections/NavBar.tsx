@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-// import API from "../../api/axios";
+import axios from "axios";
 
 import { GoProjectRoadmap, GoHome } from "react-icons/go";
 import { MdCall } from "react-icons/md";
@@ -17,20 +17,21 @@ import {
 export const Header = () => {
   const auth = useContext(AuthContext);
   const user = auth?.user;
-  // const setUser = auth?.setUser;
+  const setUser = auth?.setUser;
 
-  const googleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
-  };
+  console.log("Current User:", user);
 
   const handleLogout = async () => {
-    // try {
-    //   await API.get("/auth/logout");
-    //   if (setUser) setUser(null);
-    //   window.location.href = "/";
-    // } catch (err) {
-    //   console.error("Logout failed", err);
-    // }
+    try {
+      await axios.get("http://localhost:3000/auth/logout", {
+        withCredentials: true,
+      });
+
+      if (setUser) setUser(null);
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   return (
@@ -40,7 +41,9 @@ export const Header = () => {
           className="mx-auto rounded-full border border-white/20 my-4 fixed flex items-center z-50 bg-black/20 shadow-xl"
           style={{ backdropFilter: "blur(20px)" }}
         >
-          <ul className="flex items-center gap-1 p-1.5 px-4">
+          <ul
+            className={`flex items-center p-1 px-5 ${user ? "gap-1" : "gap-4"}`}
+          >
             {/* 1. USER PROFILE SECTION (Only shows if logged in) */}
             {user && (
               <li className="flex items-center gap-2 pr-4 mr-2 border-r border-white/10">
@@ -50,7 +53,7 @@ export const Header = () => {
                   alt="avatar"
                 />
                 <span className="text-xs font-medium text-white/80 hidden sm:block">
-                  {user.username}
+                  {user.name.split(" ")[0]}
                 </span>
               </li>
             )}
@@ -87,7 +90,7 @@ export const Header = () => {
               <li key={idx}>
                 <a
                   href={item.href}
-                  className="p-2.5 rounded-full block cursor-pointer hover:bg-white/10 hover:scale-110 transition-all duration-200 text-white/70 hover:text-white"
+                  className="p-2.5  rounded-full block cursor-pointer hover:bg-white/10 hover:scale-110 transition-all duration-200 text-white/90 hover:text-white"
                 >
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -102,23 +105,16 @@ export const Header = () => {
             ))}
 
             {/* 3. AUTH BUTTON SECTION */}
-            <li className="ml-2 pl-3 border-l border-white/10">
-              {user ? (
+            {user && (
+              <li className="ml-2 pl-3 border-l border-white/10">
                 <button
                   onClick={handleLogout}
                   className="text-[11px] uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white px-4 py-2 rounded-full transition-all border border-red-500/30"
                 >
                   Logout
                 </button>
-              ) : (
-                <button
-                  onClick={googleLogin}
-                  className="text-[11px] uppercase tracking-wider font-bold bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-all"
-                >
-                  Login
-                </button>
-              )}
-            </li>
+              </li>
+            )}
           </ul>
         </nav>
       </div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import "../../index.css";
 import { useEffect, useState } from "react";
 import Shuffle from "./shadcn-io/shuffle";
+import LoginForm from "../Sections/LoginForm";
 
 interface Testimonial {
   name: string;
@@ -21,6 +22,7 @@ export const AnimatedTestimonials = ({
   autoplay?: boolean;
 }) => {
   const [active, setActive] = useState(0);
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleNext = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -48,6 +50,7 @@ export const AnimatedTestimonials = ({
   if (testimonials.length === 0) {
     return null;
   }
+
   return (
     <div className=" mx-auto max-w-sm px-4 py-10 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
       <div className=" flex justify-between items-center text-center mb-10 ">
@@ -72,7 +75,10 @@ export const AnimatedTestimonials = ({
           }}
         />
 
-        <button className=" group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]">
+        <button
+          onClick={() => setShowLogin(true)}
+          className=" group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]"
+        >
           <div className=" sign flex items-center justify-center w-full text-white text-[2.2em] transition-all duration-300 group-hover:w-[35%] ">
             +
           </div>
@@ -81,6 +87,16 @@ export const AnimatedTestimonials = ({
             Create
           </div>
         </button>
+        {showLogin && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+            {/* We wrap the LoginForm in a div that allows us to click outside to close */}
+            <div className="relative">
+              {/* Close button for convenience */}
+
+              <LoginForm />
+            </div>
+          </div>
+        )}
       </div>
       <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
         <div>

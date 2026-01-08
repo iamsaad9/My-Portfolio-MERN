@@ -4,9 +4,12 @@ import axios from "axios";
 import React, { useEffect } from "react";
 
 interface User {
-  username: string;
+  name: string;
   avatar: string;
-  // Add other fields if needed
+  githubId?: string;
+  googleId?: string;
+  email?: string;
+  password?: string;
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({

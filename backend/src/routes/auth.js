@@ -67,8 +67,16 @@ router.get("/status", async (req, res) => {
 
 // Logout
 router.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.json({ message: "Logged out successfully" });
+  // 1. Clear the cookie by name ('token')
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false, // Must match your login setting (false for localhost)
+    sameSite: "lax",
+    path: "/", // Ensure path is consistent
+  });
+
+  // 2. Send a success response
+  res.status(200).json({ message: "Logged out successfully" });
 });
 
 export default router;

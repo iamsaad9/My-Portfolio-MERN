@@ -2,9 +2,12 @@ import { createContext } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
 interface User {
-  username: string;
+  name: string;
   avatar: string;
-  // Add other fields if needed
+  githubId?: string;
+  googleId?: string;
+  email?: string;
+  password?: string;
 }
 
 // 1. Define the shape of your context
