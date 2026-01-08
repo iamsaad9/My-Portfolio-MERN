@@ -11,6 +11,7 @@ import { AnimatedTestimonialsDemo } from "@/components/Sections/Testimonials";
 import ProjectsHeading from "@/components/ui/ProjectHeading";
 import ScrollUpButton from "@/components/ui/ScrollUpButton";
 import { useEffect, useState } from "react";
+import useLoadingStore from "@/context/store/useLoadingStore";
 
 interface Project {
   title: string;
@@ -62,6 +63,8 @@ const Home = () => {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [about, setAbout] = useState<About>();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const startLoading = useLoadingStore((state) => state.startLoading);
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
 
   //Fetching skills from the backend
   const fetchSkills = async () => {
@@ -143,11 +146,25 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchProjects();
-    fetchSkills();
-    fetchServices();
-    fetchAbout();
-    fetchTestimonials();
+    const loadData = async () => {
+      try {
+        startLoading();
+
+        await Promise.all([
+          fetchProjects(),
+          fetchSkills(),
+          fetchServices(),
+          fetchAbout(),
+          fetchTestimonials(),
+        ]);
+      } catch (error) {
+        console.log("Error in useEffect fetching data:", error);
+      } finally {
+        stopLoading();
+      }
+    };
+
+    loadData();
   }, []);
 
   return (
