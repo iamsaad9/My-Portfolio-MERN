@@ -3,9 +3,10 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "motion/react";
 import "../../index.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Shuffle from "./shadcn-io/shuffle";
 import useLoginStore from "@/context/store/useLoginStore";
+import { AuthContext } from "../../context/AuthContext";
 
 interface Testimonial {
   name: string;
@@ -23,6 +24,8 @@ export const AnimatedTestimonials = ({
 }) => {
   const [active, setActive] = useState(0);
   const { showlogin } = useLoginStore();
+  const auth = useContext(AuthContext);
+  const user = auth?.user;
 
   const handleNext = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -34,6 +37,11 @@ export const AnimatedTestimonials = ({
 
   const isActive = (index: number) => {
     return index === active;
+  };
+
+  const handleLoginForm = () => {
+    if (user) return;
+    showlogin(true);
   };
 
   useEffect(() => {
@@ -76,7 +84,7 @@ export const AnimatedTestimonials = ({
         />
 
         <button
-          onClick={() => showlogin(true)}
+          onClick={handleLoginForm}
           className=" group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]"
         >
           <div className=" sign flex items-center justify-center w-full text-white text-[2.2em] transition-all duration-300 group-hover:w-[35%] ">

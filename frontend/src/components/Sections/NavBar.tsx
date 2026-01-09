@@ -109,7 +109,7 @@ export const Header = () => {
               <li className="ml-2 pl-3 border-l border-white/10">
                 <button
                   onClick={handleLogout}
-                  className="text-[11px] uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white px-4 py-2 rounded-full transition-all border border-red-500/30"
+                  className="text-[11px] cursor-pointer uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white px-4 py-2 rounded-full transition-all border border-red-500/30"
                 >
                   Logout
                 </button>
