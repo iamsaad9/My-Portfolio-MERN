@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import Shuffle from "./shadcn-io/shuffle";
 import useLoginStore from "@/context/store/useLoginStore";
 import { AuthContext } from "../../context/AuthContext";
+import useModalStore from "@/context/store/useModalStore";
 
 interface Testimonial {
   name: string;
@@ -25,6 +26,7 @@ export const AnimatedTestimonials = ({
   const [active, setActive] = useState(0);
   const { showlogin } = useLoginStore();
   const auth = useContext(AuthContext);
+  const { openModal } = useModalStore();
   const user = auth?.user;
 
   const handleNext = () => {
@@ -40,8 +42,11 @@ export const AnimatedTestimonials = ({
   };
 
   const handleLoginForm = () => {
-    if (user) return;
-    showlogin(true);
+    if (user) {
+      openModal();
+    } else {
+      showlogin(true);
+    }
   };
 
   useEffect(() => {
@@ -60,7 +65,7 @@ export const AnimatedTestimonials = ({
   }
 
   return (
-    <div className=" mx-auto max-w-sm px-4 py-10 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
+    <div className=" mx-auto max-w-sm px-4 py-10 font-sans antialiased md:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
       <div className=" flex justify-between items-center text-center mb-10 ">
         <Shuffle
           text="Testimonials"
@@ -137,7 +142,7 @@ export const AnimatedTestimonials = ({
                     width={500}
                     height={500}
                     draggable={false}
-                    className="h-full w-full rounded-3xl object-cover object-center"
+                    className="h-full w-full rounded-3xl object-cover object-top"
                   />
                 </motion.div>
               ))}

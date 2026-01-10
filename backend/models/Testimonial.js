@@ -6,17 +6,30 @@ const testimonialSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    designation: {
+    email: {
       type: String,
-      required: false,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
     },
     image: {
       type: String,
       required: true,
     },
+    designation: {
+      type: String,
+      required: false,
+    },
     testimonial: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
     },
   },
   { timestamps: true }

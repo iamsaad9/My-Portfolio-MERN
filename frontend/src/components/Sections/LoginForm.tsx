@@ -6,10 +6,95 @@ import { FlickeringGrid } from "../ui/shadcn-io/flickering-grid";
 import { Input } from "../ui/input";
 import { X } from "lucide-react";
 import useLoginStore from "@/context/store/useLoginStore";
+import axios from "axios";
+
+interface Loading {
+  isLoading: boolean;
+  status: string;
+}
 
 const LoginForm = () => {
   const [login, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
+
+  // State to track validation errors
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [formLoading, setFormLoading] = useState<Loading>({
+    isLoading: false,
+    status: "",
+  });
+
   const { showlogin, isLogin } = useLoginStore();
+
+  const validate = () => {
+    let tempErrors: { [key: string]: string } = {};
+
+    // Email Validation
+    if (!formData.email) {
+      tempErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      tempErrors.email = "Email is invalid";
+    }
+
+    // Password Validation
+    if (!formData.password) {
+      tempErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      tempErrors.password = "Password must be at least 6 characters";
+    }
+
+    // Name Validation (Only for registration)
+    if (!login && !formData.name.trim()) {
+      tempErrors.name = "Name is required for registration";
+    }
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0; // Returns true if no errors
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: "" });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Run validation before API call
+    if (!validate()) return;
+
+    const endpoint = login ? "/auth/login" : "/auth/register";
+    login
+      ? setFormLoading({ isLoading: true, status: "Logging in..." })
+      : setFormLoading({ isLoading: true, status: "Signing up..." });
+    try {
+      await axios.post(`http://localhost:3000${endpoint}`, formData, {
+        withCredentials: true,
+      });
+
+      if (login) {
+        alert("Logged in!");
+        window.location.reload();
+      } else {
+        alert("Registered! Now please log in.");
+        setIsLogin(true);
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Something went wrong");
+    } finally {
+      setFormLoading({ isLoading: false, status: "" });
+    }
+  };
+
+  const googleLogin = () => {
+    window.location.href = "http://localhost:3000/auth/google";
+  };
 
   useEffect(() => {
     if (isLogin) {
@@ -23,10 +108,6 @@ const LoginForm = () => {
   }, [isLogin]);
 
   if (!isLogin) return null;
-
-  const googleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
-  };
 
   return (
     <motion.div className="fixed inset-0 z-100 flex items-center justify-center backdrop-blur-sm bg-black/20">
@@ -50,7 +131,7 @@ const LoginForm = () => {
             {/* Animated Toggle */}
             <div className="relative w-full mb-5 bg-[#1a1a1a] border border-white rounded-[10px] p-1 flex">
               <motion.div
-                className="absolute top-1 bottom-1 bg-gradient-to-r from-(--theme_1) to-(--theme_2) rounded-[8px]"
+                className="absolute top-1 bottom-1 bg-linear-to-r from-(--theme_1) to-(--theme_2) rounded-[10px]"
                 initial={false}
                 animate={{
                   left: login ? "4px" : "50%",
@@ -95,40 +176,51 @@ const LoginForm = () => {
                 <Input
                   type="text"
                   name="name"
-                  //  value={form.name}
-                  //  onChange={handleChange}
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Enter your name"
                   className="p-3 border border-white  bg-(--bg-secondary) rounded-[0.5rem] text-white w-full"
                 />
+                {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
               </motion.div>
             )}
 
             <div className="flex flex-col mt-2"></div>
             <Input
-              type="text"
-              name="name"
-              //  value={form.name}
-              //  onChange={handleChange}
-              placeholder="Enter your name"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
               className="p-3 border border-white  bg-(--bg-secondary) rounded-[0.5rem] text-white w-full"
             />
+            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
 
             <div className="flex flex-col mt-2"></div>
             <Input
-              type="text"
-              name="name"
-              //  value={form.name}
-              //  onChange={handleChange}
-              placeholder="Enter your name"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
               className="p-3 border border-white  bg-(--bg-secondary) rounded-[0.5rem] text-white w-full"
             />
+            {errors.password && (
+              <p style={{ color: "red" }}>{errors.password}</p>
+            )}
 
             <div className="w-full flex justify-center items-center">
               <button
-                type="submit"
-                className="mt-5 bg-gradient-to-r from-(--theme_1) to-(--theme_2) text-white text-[15px] font-medium rounded-[10px] p-2 w-[50%] cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
+                // type="submit"
+                onClick={handleSubmit}
+                className="mt-5 bg-linear-to-r from-(--theme_1) to-(--theme_2) text-white text-[15px] font-medium rounded-[10px] p-2 w-[50%] cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
               >
-                {login ? "Login" : "Sign Up"}
+                {/* {login ? "Login" : "Sign Up"} */}
+                {formLoading.isLoading
+                  ? formLoading.status
+                  : login
+                  ? "Login"
+                  : "Sign Up"}
               </button>
             </div>
 

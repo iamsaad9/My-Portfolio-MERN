@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-
+import { motion } from "framer-motion";
 import { GoProjectRoadmap, GoHome } from "react-icons/go";
-import { MdCall } from "react-icons/md";
+import { MdCall, MdLogout } from "react-icons/md";
 import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { CiPalette } from "react-icons/ci";
 import { LuMessageSquareQuote } from "react-icons/lu";
@@ -18,6 +18,7 @@ export const Header = () => {
   const auth = useContext(AuthContext);
   const user = auth?.user;
   const setUser = auth?.setUser;
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   console.log("Current User:", user);
 
@@ -106,13 +107,46 @@ export const Header = () => {
 
             {/* 3. AUTH BUTTON SECTION */}
             {user && (
-              <li className="ml-2 pl-3 border-l border-white/10">
-                <button
-                  onClick={handleLogout}
-                  className="text-[11px] cursor-pointer uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white px-4 py-2 rounded-full transition-all border border-red-500/30"
-                >
-                  Logout
-                </button>
+              <li className="ml-2 pl-3 border-l border-white/10 relative">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setShowLogoutModal(!showLogoutModal)}
+                      className="cursor-pointer uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-full transition-all border border-red-500/30"
+                    >
+                      <MdLogout size={20} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>Logout</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                {showLogoutModal && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-2 absolute flex items-center justify-center flex-col rounded-2xl bg-(--bg-primary) p-3 gap-2"
+                  >
+                    <p className="text-sm">Are you sure you want to logout?</p>
+                    <div className="flex items-center justify-center">
+                      <button
+                        onClick={handleLogout}
+                        className="m-2 px-4 py-1 cursor-pointer hover:bg-red-600 border border-red-600 text-red-600 hover:text-white rounded-[0.5rem] hover:bg-red-700 transition-all duration-200"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => setShowLogoutModal(!showLogoutModal)}
+                        className="m-2 px-4 py-1 cursor-pointer bg-gray-300 text-gray-800 rounded-[0.5rem] hover:bg-gray-400 transition"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
               </li>
             )}
           </ul>

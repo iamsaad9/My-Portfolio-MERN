@@ -65,6 +65,47 @@ router.get("/status", async (req, res) => {
   }
 });
 
+// Register
+router.post("/register", async (req, res) => {
+  try {
+    const { email, password, name } = req.body;
+
+    // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ message: "User already exists" });
+
+    // Create user (the pre-save hook in your schema will hash the password here!)
+    const newUser = await User.create({ email, password, name });
+
+    res.status(201).json({ message: "User created successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Login Route (Email/Password)
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
+    if (err) return next(err);
+
+    // Check if user was found/password matched
+    if (!user) {
+      return res.status(401).json({ message: info.message || "Login failed" });
+    }
+
+    // If successful, sign token and set cookie
+    const token = signToken(user);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // true in production
+      sameSite: "lax",
+    });
+
+    return res.json({ message: "Logged in successfully", user });
+  })(req, res, next);
+});
+
 // Logout
 router.get("/logout", (req, res) => {
   // 1. Clear the cookie by name ('token')
