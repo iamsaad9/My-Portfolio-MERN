@@ -12,6 +12,8 @@ import ProjectsHeading from "@/components/ui/ProjectHeading";
 import ScrollUpButton from "@/components/ui/ScrollUpButton";
 import { useEffect, useState } from "react";
 import useLoadingStore from "@/context/store/useLoadingStore";
+import { MdErrorOutline } from "react-icons/md";
+import { X } from "lucide-react";
 
 interface Project {
   title: string;
@@ -53,6 +55,12 @@ interface Testimonial {
   testimonial: string;
   image: string;
   designation: string;
+  status: "approved" | "pending" | "rejected";
+}
+
+interface DatabaseStatus {
+  isDown: boolean;
+  displayMessage: boolean;
 }
 
 const Home = () => {
@@ -63,6 +71,10 @@ const Home = () => {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [about, setAbout] = useState<About>();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [isDatabaseDown, setIsDatabaseDown] = useState<DatabaseStatus>({
+    isDown: false,
+    displayMessage: false,
+  });
   const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
 
@@ -70,11 +82,16 @@ const Home = () => {
   const fetchSkills = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/skills");
+      // CHECK THIS: fetch only throws on network failure, not server errors
+      if (!res.ok) {
+        throw new Error(`Server responded with status: ${res.status}`);
+      }
       const data = await res.json();
       console.log("Fetched skills:", data);
       setSkills(data);
     } catch (error) {
-      console.log("Error fetching skills:", error);
+      console.error("fetchSkills Error:", error);
+      throw error;
     }
   };
 
@@ -99,6 +116,9 @@ const Home = () => {
   const fetchProjects = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/projects");
+      if (!res.ok) {
+        throw new Error(`Server responded with status: ${res.status}`);
+      }
       const data = await res.json();
       console.log("Fetched projects:", data);
       const filteredProjects = filterProjects(data);
@@ -109,39 +129,52 @@ const Home = () => {
       console.log("Project images:", getProjectImages(data));
     } catch (error) {
       console.log("Error fetching projects:", error);
+      throw error;
     }
   };
 
   const fetchServices = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/services");
+      if (!res.ok) {
+        throw new Error(`Server responded with status: ${res.status}`);
+      }
       const data = await res.json();
       console.log("Fetched services:", data);
       setServices(data);
     } catch (error) {
       console.log("Error fetching services:", error);
+      throw error;
     }
   };
 
   const fetchAbout = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/about");
+      if (!res.ok) {
+        throw new Error(`Server responded with status: ${res.status}`);
+      }
       const data = await res.json();
       console.log("Fetched about:", data);
       setAbout(data);
     } catch (error) {
       console.log("Error fetching about:", error);
+      throw error;
     }
   };
 
   const fetchTestimonials = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/testimonials");
+      if (!res.ok) {
+        throw new Error(`Server responded with status: ${res.status}`);
+      }
       const data = await res.json();
       console.log("Fetched testimonials:", data);
       setTestimonials(data);
     } catch (error) {
       console.log("Error fetching testimonials:", error);
+      throw error;
     }
   };
 
@@ -149,7 +182,12 @@ const Home = () => {
     const loadData = async () => {
       try {
         startLoading();
+        setIsDatabaseDown({
+          isDown: false,
+          displayMessage: false,
+        }); // Reset before trying
 
+        // If any of these fail, it will jump to the catch block
         await Promise.all([
           fetchProjects(),
           fetchSkills(),
@@ -158,7 +196,11 @@ const Home = () => {
           fetchTestimonials(),
         ]);
       } catch (error) {
-        console.log("Error in useEffect fetching data:", error);
+        console.error("Critical data fetch failed:", error);
+        setIsDatabaseDown({
+          isDown: true,
+          displayMessage: true,
+        }); // Show your banner
       } finally {
         stopLoading();
       }
@@ -168,20 +210,49 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="z-10">
-      <ScrollUpButton />
-      <Hero />
-      <IntroSection about={about} />
-      <IntroSummary />
-      <SkillsSection skills={skills} />
-      <HeroParallaxDemo projects={projectImages} />
-      <Services services={services} />
-      <ProjectsHeading />
-      <ProjectCarousel specialProjects={specialProjects} />
-      <ProjectsSection filteredProjects={allProjects} />
-      <AnimatedTestimonialsDemo testimonials={testimonials} />
-      <ContactForm />
-    </div>
+    <>
+      {isDatabaseDown.isDown && isDatabaseDown.displayMessage && (
+        <div className="p-3 m-5 flex items-center  gap-2 z-[99999] bg-red-700/20 rounded-2xl border border-red-700  fixed">
+          <MdErrorOutline size={20} color="red" />
+
+          <p className="text-sm text-white">
+            Failed to fetch data. Please try again later.
+          </p>
+
+          <X
+            size={20}
+            className="text-white cursor-pointer"
+            onClick={() =>
+              setIsDatabaseDown((prev) => ({ ...prev, displayMessage: false }))
+            }
+          />
+        </div>
+      )}
+      <div className="z-10 ">
+        <ScrollUpButton />
+        <Hero />
+
+        <IntroSection about={about} />
+        <IntroSummary />
+        <SkillsSection skills={skills} />
+        {allProjects && allProjects.length > 0 && (
+          <HeroParallaxDemo projects={projectImages} />
+        )}
+        <Services services={services} />
+        <ProjectsHeading />
+        {allProjects && allProjects.length > 0 ? (
+          <ProjectCarousel specialProjects={specialProjects} />
+        ) : (
+          <div className="flex items-center justify-center h-full w-full gap-5 my-10">
+            <p className="text-xl">Something doesnt seem right...</p>
+            <span className="loader"></span>
+          </div>
+        )}
+        <ProjectsSection filteredProjects={allProjects} />
+        <AnimatedTestimonialsDemo testimonials={testimonials} />
+        <ContactForm />
+      </div>
+    </>
   );
 };
 

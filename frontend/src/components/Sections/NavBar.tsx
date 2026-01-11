@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import { RxAvatar } from "react-icons/rx";
 
 export const Header = () => {
   const auth = useContext(AuthContext);
@@ -48,11 +49,16 @@ export const Header = () => {
             {/* 1. USER PROFILE SECTION (Only shows if logged in) */}
             {user && (
               <li className="flex items-center gap-2 pr-4 mr-2 border-r border-white/10">
-                <img
-                  src={user.avatar}
-                  className="w-7 h-7 rounded-full border border-white/20"
-                  alt="avatar"
-                />
+                {user.avatar != null ? (
+                  <img
+                    src={user.avatar}
+                    className="w-7 h-7 rounded-full border border-white/20"
+                    alt="avatar"
+                  />
+                ) : (
+                  <RxAvatar size={28} className="text-white/70" />
+                )}
+
                 <span className="text-xs font-medium text-white/80 hidden sm:block">
                   {user.name.split(" ")[0]}
                 </span>
@@ -130,7 +136,9 @@ export const Header = () => {
                     transition={{ duration: 0.2 }}
                     className="mt-2 absolute flex items-center justify-center flex-col rounded-2xl bg-(--bg-primary) p-3 gap-2"
                   >
-                    <p className="text-sm">Are you sure you want to logout?</p>
+                    <p className="text-sm text-white/50">
+                      Are you sure you want to logout?
+                    </p>
                     <div className="flex items-center justify-center">
                       <button
                         onClick={handleLogout}

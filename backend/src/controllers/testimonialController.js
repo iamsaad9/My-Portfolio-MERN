@@ -12,22 +12,19 @@ export async function getAllTestimonials(req, res) {
 
 export async function addTestimonial(req, res) {
   try {
-    const { name, testimonial, designation, username, email, fallbackImage } =
-      req.body;
+    const { name, testimonial, designation, username, email } = req.body;
 
     let imageUrl = "";
 
     if (req.files?.image) {
       imageUrl = await uploadToAppwrite(req.files.image[0]);
-    } else if (fallbackImage) {
-      imageUrl = fallbackImage;
     }
 
     const newTestimonial = new Testimonial({
       name,
       testimonial,
       designation,
-      image: imageUrl, // Will be Appwrite URL, user.avatar, or ""
+      image: imageUrl,
       username,
       email,
     });
@@ -58,22 +55,21 @@ export async function deleteTestimonial(req, res) {
 
 export async function updateTestimonial(req, res) {
   try {
-    const { name, testimonial, designation, username, email, fallbackImage } =
+    const { name, testimonial, designation, username, email, status } =
       req.body;
 
-    // 1. Build the update object with standard fields
-    const updateData = { name, testimonial, designation, username, email };
+    const updateData = {
+      name,
+      testimonial,
+      designation,
+      username,
+      email,
+      status,
+    };
 
-    // 2. Determine which image to use
     if (req.files?.image) {
-      // Priority 1: New file upload
       updateData.image = await uploadToAppwrite(req.files.image[0]);
-    } else if (fallbackImage) {
-      // Priority 2: Use the provided fallback string (user.avatar)
-      updateData.image = fallbackImage;
     }
-    // Note: If both are missing, the 'image' field remains unchanged
-    // or you could set updateData.image = "" if you want to clear it.
 
     const updatedTestimonial = await Testimonial.findByIdAndUpdate(
       req.params.id,

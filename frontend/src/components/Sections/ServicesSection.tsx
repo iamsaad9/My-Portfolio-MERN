@@ -87,27 +87,37 @@ function Services({ services }: ServicesProps) {
         <span className="text-xl sm:text-2xl border-b-2 border-(--theme) uppercase font-light py-2">
           services provided
         </span>
-        {/* <div className="flex flex-col sm:flex-row w-full justify-center items-center gap-5 lg:gap-10"></div> */}
-        <div className="w-full p-6 flex justify-center ">
-          <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {services.map((item, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <ThreeDCardDemo item={item} />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
+
+        {services.length !== 0 ? (
+          <div className="w-full p-6 flex justify-center ">
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {services.map((item, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="md:basis-1/2 lg:basis-1/3"
+                  >
+                    <div className="p-1">
+                      <ThreeDCardDemo item={item} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center h-full w-full gap-5 my-10">
+            <p className="text-xl">Something doesnt seem right...</p>
+            <span className="loader"></span>
+          </div>
+        )}
       </div>
     </div>
   );

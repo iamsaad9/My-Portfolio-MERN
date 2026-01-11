@@ -43,7 +43,7 @@ const Loader: React.FC = () => {
           className="drop-shadow-[1px_1px_15px_rgba(59,130,246,0.5)]"
         >
           <defs>
-            <linearGradient y2="%" x2="100%" y1="0%" x1="0%" id="gradient">
+            <linearGradient y2="0%" x2="100%" y1="0%" x1="0%" id="gradient">
               <stop stopColor="var(--theme_3)" offset="0%"></stop>{" "}
               {/* Tailwind Pink-400 */}
               <stop stopColor="var(--theme_1)" offset="100%"></stop>{" "}

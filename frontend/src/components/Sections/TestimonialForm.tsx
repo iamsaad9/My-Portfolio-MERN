@@ -7,6 +7,9 @@ import { Input } from "../ui/input";
 import { BackgroundBeams } from "../ui/background-beams";
 import { AuthContext } from "@/context/AuthContext";
 import useModalStore from "@/context/store/useModalStore";
+import { FileUpload } from "../ui/file-upload";
+import { X } from "lucide-react";
+import { Spinner } from "../ui/Spinner";
 
 const TestimonialForm = () => {
   const auth = useContext(AuthContext);
@@ -27,10 +30,9 @@ const TestimonialForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-    }
+  const handleFileUpload = (files: File | null) => {
+    setSelectedFile(files);
+    console.log("Files: ", files);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,11 +55,17 @@ const TestimonialForm = () => {
       data.append("fallbackImage", user?.avatar || "");
     }
 
+    console.log("Submitting Testimonial:", Object.fromEntries(data.entries()));
     try {
       await axios.post("http://localhost:3000/api/testimonials/", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Testimonial submitted!");
+      setFormData({
+        name: "",
+        designation: "",
+        testimonial: "",
+      });
       closeModal();
     } catch (err: any) {
       alert(err.response?.data?.message || "Failed to submit");
@@ -95,21 +103,9 @@ const TestimonialForm = () => {
           <button
             type="button"
             onClick={closeModal}
-            className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
+            className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors cursor-pointer"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <X size={20} />
           </button>
 
           {/* Header */}
@@ -173,7 +169,7 @@ const TestimonialForm = () => {
               htmlFor="designation"
               className="text-white/80 text-sm font-medium"
             >
-              Designation / Title
+              Designation / Title (Optional)
             </label>
 
             <Input
@@ -187,16 +183,17 @@ const TestimonialForm = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-white/70 text-sm">
-              Update Profile Picture (Optional)
+          <div className="flex flex-col gap-2">
+            <label className="text-white/80 text-sm">
+              Display Picture (Optional)
             </label>
-            <input
+            {/* <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="text-white text-sm"
-            />
+              className="text-white text-sm border border-white"
+            /> */}
+            <FileUpload onChange={handleFileUpload} />
           </div>
 
           {/* Testimonial Field */}
@@ -228,7 +225,13 @@ const TestimonialForm = () => {
             disabled={isSubmitting || !formData.name || !formData.testimonial}
             className="mt-5 bg-linear-to-r from-(--theme_1) to-(--theme_2) text-white text-[15px] font-medium rounded-[10px] p-2 w-full cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
           >
-            {isSubmitting ? "Submitting..." : "Submit Testimonial"}
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-2">
+                <Spinner size={20} activeColor="white" /> Submitting...
+              </div>
+            ) : (
+              "Submit Testimonial"
+            )}
           </button>
 
           {/* Info Text */}

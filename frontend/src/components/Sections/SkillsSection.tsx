@@ -59,32 +59,39 @@ const SkillsSection = ({ skills }: SkillsSectionProps) => {
     >
       <TextHoverEffect text="SKILLS" />
 
-      <div className="w-[80%] grid grid-cols-3 gap-y-14 content-center place-items-center">
-        {skills.map((skill, index) => (
-          <AnimatedCard
-            key={index}
-            frontContent={
-              <div className="flex flex-col gap-5 items-center justify-center h-full">
-                <DynamicIcon iconName={skill.logo} />
+      {skills.length != 0 ? (
+        <div className="w-[80%] grid grid-cols-3 gap-y-14 content-center place-items-center">
+          {skills.map((skill, index) => (
+            <AnimatedCard
+              key={index}
+              frontContent={
+                <div className="flex flex-col gap-5 items-center justify-center h-full">
+                  <DynamicIcon iconName={skill.logo} />
 
-                <span
-                  className="text-3xl mb-4 text-center"
-                  style={{ fontFamily: "Raleway, sans-serif" }}
-                >
-                  {skill.title}
-                </span>
-              </div>
-            }
-            backContent={
-              <div className="flex items-center justify-center h-full p-10 z-1">
-                <span className=" text-base text-center leading-relaxed">
-                  {skill.description}
-                </span>
-              </div>
-            }
-          />
-        ))}
-      </div>
+                  <span
+                    className="text-3xl mb-4 text-center"
+                    style={{ fontFamily: "Raleway, sans-serif" }}
+                  >
+                    {skill.title}
+                  </span>
+                </div>
+              }
+              backContent={
+                <div className="flex items-center justify-center h-full p-10 z-1">
+                  <span className=" text-base text-center leading-relaxed">
+                    {skill.description}
+                  </span>
+                </div>
+              }
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center h-full w-full gap-5 my-10">
+          <p className="text-xl">Something doesnt seem right...</p>
+          <span className="loader"></span>
+        </div>
+      )}
     </div>
   );
 };

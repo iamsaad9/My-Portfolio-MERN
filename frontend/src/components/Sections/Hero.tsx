@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="h-screen w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
       <div
         className={cn(
-          "absolute inset-0 ",
+          "absolute inset-0 opacity-50",
           "[background-size:60px_60px]",
           "[background-image:linear-gradient(to_right,#e4e4e7_2px,transparent_1px),linear-gradient(to_bottom,#171616_2px,transparent_1px)]",
           "[background-image:linear-gradient(to_right,#262626_2px,transparent_1px),linear-gradient(to_bottom,#171616_2px,transparent_1px)]"

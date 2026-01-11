@@ -6,6 +6,7 @@ interface Testimonial {
   testimonial: string;
   image: string;
   designation: string;
+  status: "approved" | "pending" | "rejected";
 }
 
 export function AnimatedTestimonialsDemo({
