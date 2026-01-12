@@ -8,9 +8,12 @@ import Shuffle from "./shadcn-io/shuffle";
 import useLoginStore from "@/context/store/useLoginStore";
 import { AuthContext } from "../../context/AuthContext";
 import useModalStore from "@/context/store/useModalStore";
+import { MdEditNote } from "react-icons/md";
 
 interface Testimonial {
+  _id: string;
   name: string;
+  email: string;
   testimonial: string;
   image: string;
   designation: string;
@@ -52,12 +55,16 @@ export const AnimatedTestimonials = ({
 
   const isActive = (index: number) => index === active;
 
-  const handleLoginForm = () => {
+  const handleOpenForm = () => {
     if (user) {
-      openModal();
+      openModal(false);
     } else {
       showlogin(true);
     }
+  };
+
+  const handleUpdateForm = (_id: string) => {
+    openModal(true, _id);
   };
 
   useEffect(() => {
@@ -65,13 +72,17 @@ export const AnimatedTestimonials = ({
       const interval = setInterval(handleNext, 5000);
       return () => clearInterval(interval);
     }
-  }, [autoplay, approvedTestimonials.length]);
+  }, [autoplay, approvedTestimonials.length, handleNext]);
 
   const randomRotateY = () => Math.floor(Math.random() * 21) - 10;
 
   // Render Logic Helpers
   const hasDataAtAll = testimonials.length > 0;
   const hasApproved = approvedTestimonials.length > 0;
+  const userTestimonial = approvedTestimonials.find(
+    (t) => t.email === auth?.user?.email
+  );
+  const hasAlreadySubmitted = !!userTestimonial;
 
   return (
     <div className="mx-auto max-w-sm px-4 py-10 font-sans antialiased md:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
@@ -83,22 +94,36 @@ export const AnimatedTestimonials = ({
             fontSize: "clamp(1.2rem, 6vw, 2rem)",
             fontFamily: "inherit",
           }}
-          // ... rest of your shuffle props
         />
 
-        {/* Show Create Button if database is working (even if 0 approved) */}
         {hasDataAtAll && (
-          <button
-            onClick={handleLoginForm}
-            className="group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]"
-          >
-            <div className="sign flex items-center justify-center w-full text-white text-[2.2em] transition-all duration-300 group-hover:w-[35%]">
-              +
-            </div>
-            <div className="text absolute right-0 w-0 opacity-0 text-white text-[1.2em] font-semibold transition-all duration-300 group-hover:opacity-100 group-hover:w-[60%] group-hover:pr-[10px] whitespace-nowrap">
-              Create
-            </div>
-          </button>
+          <div className="flex gap-5 justify-center items-center">
+            {/* 1. Check if the CURRENT slide belongs to the logged-in user */}
+            {approvedTestimonials[active]?.email === user?.email ? (
+              <MdEditNote
+                size={30}
+                className="cursor-pointer hover:scale-115 hover:text-white/70 transition-all duration-200"
+                onClick={() =>
+                  handleUpdateForm(approvedTestimonials[active]._id)
+                }
+              />
+            ) : /* 2. If it's NOT the user's slide, check if they have a testimonial anywhere else.
+         If they DON'T have one anywhere, show the Create button.
+         If they DO have one elsewhere, show nothing (null). */
+            !hasAlreadySubmitted ? (
+              <button
+                onClick={handleOpenForm}
+                className="group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]"
+              >
+                <div className="sign flex items-center justify-center w-full text-white text-[2.2em] transition-all duration-300 group-hover:w-[35%]">
+                  +
+                </div>
+                <div className="text absolute right-0 w-0 opacity-0 text-white text-[1.2em] font-semibold transition-all duration-300 group-hover:opacity-100 group-hover:w-[60%] group-hover:pr-[10px] whitespace-nowrap">
+                  Create
+                </div>
+              </button>
+            ) : null}
+          </div>
         )}
       </div>
 

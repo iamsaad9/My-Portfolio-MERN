@@ -2,10 +2,12 @@ import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { BackgroundBeams } from "../ui/background-beams";
 
 interface Testimonial {
+  _id: string;
   name: string;
   testimonial: string;
   image: string;
   designation: string;
+  email: string;
   status: "approved" | "pending" | "rejected";
 }
 

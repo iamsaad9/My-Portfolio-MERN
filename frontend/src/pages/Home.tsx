@@ -51,11 +51,13 @@ interface ProjectImages {
 }
 
 interface Testimonial {
+  _id: string;
   name: string;
   testimonial: string;
   image: string;
   designation: string;
   status: "approved" | "pending" | "rejected";
+  email: string;
 }
 
 interface DatabaseStatus {
@@ -81,7 +83,7 @@ const Home = () => {
   //Fetching skills from the backend
   const fetchSkills = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/skills");
+      const res = await fetch(`${import.meta.env.VITE_DB_URL}/api/skills`);
       // CHECK THIS: fetch only throws on network failure, not server errors
       if (!res.ok) {
         throw new Error(`Server responded with status: ${res.status}`);
@@ -115,7 +117,7 @@ const Home = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/projects");
+      const res = await fetch(`${import.meta.env.VITE_DB_URL}/api/projects`);
       if (!res.ok) {
         throw new Error(`Server responded with status: ${res.status}`);
       }
@@ -135,7 +137,7 @@ const Home = () => {
 
   const fetchServices = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/services");
+      const res = await fetch(`${import.meta.env.VITE_DB_URL}/api/services`);
       if (!res.ok) {
         throw new Error(`Server responded with status: ${res.status}`);
       }
@@ -150,7 +152,7 @@ const Home = () => {
 
   const fetchAbout = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/about");
+      const res = await fetch(`${import.meta.env.VITE_DB_URL}/api/about`);
       if (!res.ok) {
         throw new Error(`Server responded with status: ${res.status}`);
       }
@@ -165,7 +167,9 @@ const Home = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/testimonials");
+      const res = await fetch(
+        `${import.meta.env.VITE_DB_URL}/api/testimonials`
+      );
       if (!res.ok) {
         throw new Error(`Server responded with status: ${res.status}`);
       }

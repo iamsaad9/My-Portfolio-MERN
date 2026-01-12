@@ -20,7 +20,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/status", { withCredentials: true })
+      .get(`${import.meta.env.VITE_DB_URL}/auth/status`, {
+        withCredentials: true,
+      })
       .then((res) => setUser(res.data.user || res.data))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));

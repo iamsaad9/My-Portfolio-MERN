@@ -31,7 +31,7 @@ const LoginForm = () => {
   const { showlogin, isLogin } = useLoginStore();
 
   const validate = () => {
-    let tempErrors: { [key: string]: string } = {};
+    const tempErrors: { [key: string]: string } = {};
 
     // Email Validation
     if (!formData.email) {
@@ -70,11 +70,11 @@ const LoginForm = () => {
     if (!validate()) return;
 
     const endpoint = login ? "/auth/login" : "/auth/register";
-    login
-      ? setFormLoading({ isLoading: true, status: "Logging in..." })
-      : setFormLoading({ isLoading: true, status: "Signing up..." });
+    if (login) setFormLoading({ isLoading: true, status: "Logging in..." });
+    else setFormLoading({ isLoading: true, status: "Signing up..." });
+
     try {
-      await axios.post(`http://localhost:3000${endpoint}`, formData, {
+      await axios.post(`${import.meta.env.VITE_DB_URL}${endpoint}`, formData, {
         withCredentials: true,
       });
 
@@ -85,15 +85,19 @@ const LoginForm = () => {
         alert("Registered! Now please log in.");
         setIsLogin(true);
       }
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Something went wrong");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        alert(err.response?.data?.message || "Something went wrong");
+      } else {
+        alert("Something went wrong");
+      }
     } finally {
       setFormLoading({ isLoading: false, status: "" });
     }
   };
 
   const googleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href = `${import.meta.env.VITE_DB_URL}/auth/google`;
   };
 
   useEffect(() => {

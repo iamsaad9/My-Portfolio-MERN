@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+ @plugin '../hero.ts';
+ @source '../../frontend/node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -196,6 +198,7 @@
 /* Scrollbar styling */
 body::-webkit-scrollbar {
   width: 10px;
+  background: black;
 }
 body::-webkit-scrollbar-track{
   background-color: transparent !important;

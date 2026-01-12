@@ -14,18 +14,21 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { RxAvatar } from "react-icons/rx";
+import { FaUser } from "react-icons/fa";
+import useLoginStore from "@/context/store/useLoginStore";
 
 export const Header = () => {
   const auth = useContext(AuthContext);
   const user = auth?.user;
   const setUser = auth?.setUser;
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const { showlogin } = useLoginStore();
 
   console.log("Current User:", user);
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3000/auth/logout", {
+      await axios.get(`${import.meta.env.VITE_DB_URL}/auth/logout`, {
         withCredentials: true,
       });
 
@@ -112,7 +115,7 @@ export const Header = () => {
             ))}
 
             {/* 3. AUTH BUTTON SECTION */}
-            {user && (
+            {user ? (
               <li className="ml-2 pl-3 border-l border-white/10 relative">
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -155,6 +158,22 @@ export const Header = () => {
                     </div>
                   </motion.div>
                 )}
+              </li>
+            ) : (
+              <li className="ml-2 pl-3 border-l border-white/10 relative">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => showlogin(true)}
+                      className="cursor-pointer uppercase tracking-wider font-bold   text-(--theme_1) hover:text-(--theme_1)/70 p-2 rounded-full transition-all"
+                    >
+                      <FaUser size={19} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>Login</p>
+                  </TooltipContent>
+                </Tooltip>
               </li>
             )}
           </ul>

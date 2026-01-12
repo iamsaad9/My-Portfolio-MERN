@@ -10,6 +10,18 @@ export async function getAllTestimonials(req, res) {
   }
 }
 
+export async function getTestimonialById(req, res) {
+  try {
+    const testimonial = await Testimonial.findById(req.params.id);
+    if (!testimonial) {
+      return res.status(404).json({ message: "Testimonial not found" });
+    }
+    return res.status(200).json(testimonial);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
 export async function addTestimonial(req, res) {
   try {
     const { name, testimonial, designation, username, email } = req.body;

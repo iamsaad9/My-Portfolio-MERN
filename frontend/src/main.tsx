@@ -9,7 +9,8 @@ import Footer from "./components/Sections/Footer.tsx";
 import Loader from "./components/ui/Loader.tsx";
 import LoginForm from "./components/Sections/LoginForm.tsx";
 import TestimonialForm from "./components/Sections/TestimonialForm.tsx";
-
+import { HeroUIProvider } from "@heroui/react";
+import { ToastProvider } from "@heroui/toast";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
@@ -17,9 +18,12 @@ createRoot(document.getElementById("root")!).render(
         <Loader />
         <LoginForm />
         <TestimonialForm />
-        <Header />
-        <App />
-        <Footer />
+        <HeroUIProvider>
+          <Header />
+          <ToastProvider />
+          <App />
+          <Footer />
+        </HeroUIProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>
