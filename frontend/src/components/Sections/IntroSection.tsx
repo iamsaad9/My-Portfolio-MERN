@@ -16,29 +16,31 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
     blur={8}
     speed="fast"
     waveOpacity={0.3}
-    d
-    containerClassName="h-[400px] w-full rounded-lg  overflow-hidden  my-10"
-    className="w-full h-full flex items-center justify-center"
+    containerClassName="min-h-[400px] w-full rounded-lg overflow-hidden  my-10"
+    className="sm:w-[44rem] lg:w-[50rem] xl:w-[56rem]   h-full flex items-center justify-center"
   >
     <div
-      className="mx-auto h-full flex rounded-3xl overflow-hidden border"
+      className="h-full rounded-3xl overflow-hidden flex flex-col-reverse sm:flex-row"
       style={{ backdropFilter: "blur(20px)" }}
     >
       {about != undefined ? (
         <>
-          <div className="h-full rounded-3xl overflow-hidden">
-            {" "}
-            <img src={about?.imageUrl} alt="" className="h-full object-cover" />
+          <div className="max-h-[30rem] sm:h-auto sm:w-[50%] overflow-hidden">
+            <img
+              src={about?.imageUrl}
+              alt="saadmasood"
+              className="h-full w-full object-cover object-top"
+            />
           </div>
-          <div className="h-full w-2xl p-5 flex flex-col justify-center gap-5">
+          <div className="h-full w-full p-5 flex flex-col justify-center gap-5">
             <h1
-              className={`text-4xl sm:text-3xl md:text-5xl`}
+              className={`text-4xl sm:text-3xl md:text-4xl lg:text-5xl`}
               style={{ fontFamily: "Lora, serif" }}
             >
               About Me
             </h1>
             <p
-              className="sm:text-xs md:text-lg"
+              className="sm:text-sm md:text-base xl:text-lg"
               style={{ fontFamily: "Poiret One, sans-serif" }}
             >
               Hi, I am{" "}
@@ -49,15 +51,9 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
               />
               . {about?.bio}
             </p>
-            {/* <a
-          href="/My Resume.pdf"
-          download
-          className="flex items-center mt-10 z-10 justify-center self-end sm:self-start p-2 md:py-2 border border-[var(--theme)] text-[var(--theme)] text-lg sm:text-base md:text-base bg-transparent hover:bg-[var(--theme)] active:bg-[var(--theme)] hover:text-[var(--foreground)] active:text-[var(--foreground)] transition-all duration-300 font-light cursor-pointer"
-        >
-          Download Resume
-        </a> */}
-            <div className="relative group mt-10 ">
-              <div className="relative w-40 h-14 opacity-90 overflow-hidden rounded-[0.5rem] bg-black z-10 hover:scale-105 transition-all duration-300 ">
+
+            <div className="relative group lg:mt-5 ">
+              <div className="relative w-26 md:w-30 lg:w-32 h-10 lg:h-12  opacity-90 overflow-hidden rounded-[0.5rem] bg-black z-10 hover:scale-105 transition-all duration-300 ">
                 <div className="absolute z-10 -translate-x-44 group-hover:translate-x-120 ease-in transistion-all duration-700 h-full rounded-2xl w-44 bg-linear-to-r from-gray-500 to-white/10 opacity-30 -skew-x-12 "></div>
 
                 <div className="absolute flex items-center justify-center text-white z-1 rounded-[0.5rem] opacity-90 inset-0.5 bg-black ">
@@ -65,7 +61,7 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
                     href={about?.resumeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-lg h-full opacity-90 w-full content-center text-center rounded-2xl cursor-pointer"
+                    className="font-semibold text-sm md:text-base lg:text-lg h-full opacity-90 w-full content-center text-center rounded-2xl cursor-pointer"
                   >
                     RESUME
                   </a>

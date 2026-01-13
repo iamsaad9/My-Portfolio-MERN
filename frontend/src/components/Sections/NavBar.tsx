@@ -123,7 +123,7 @@ export const Header = () => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setShowLogoutModal(!showLogoutModal)}
-                      className="cursor-pointer uppercase tracking-wider font-bold  text-red-500 hover:text-white p-2 pr-0 rounded-full transition-all"
+                      className="cursor-pointer uppercase tracking-wider font-bold  text-red-500 hover:text-red-700 p-2 pr-0 rounded-full transition-all"
                     >
                       <MdLogout size={20} />
                     </button>

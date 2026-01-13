@@ -214,7 +214,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
             data-char={char}
             className="inline-block"
           >
-            <span className=" bg-gradient-to-b from-white to-slate-800 bg-clip-text text-center text-9xl font-semibold leading-none text-transparent">
+            <span className=" bg-gradient-to-b from-white to-slate-800 bg-clip-text text-center  text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold leading-none text-transparent">
               {char}
             </span>
           </span>

@@ -1,10 +1,34 @@
 import TextPressure from "../ui/shadcn-io/text-pressure";
 import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+const useIsMobile = (breakpoint: number) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // 1. Create a function to check the width
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= breakpoint);
+    };
+
+    // 2. Run it once on mount
+    checkIsMobile();
+
+    // 3. Add event listener for resizing
+    window.addEventListener("resize", checkIsMobile);
+
+    // 4. Clean up listener on unmount
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, [breakpoint]);
+
+  return isMobile;
+};
 
 const Hero = () => {
+  const isMobileDevice = useIsMobile(450);
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
+    <div className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden rounded-md">
       <div
         className={cn(
           "absolute inset-0 opacity-50",
@@ -38,15 +62,23 @@ const Hero = () => {
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 2 }}
+        animate={{ opacity: 1 }} // Note: opacity max is usually 1
         transition={{ duration: 2, delay: 0.5 }}
-        className="w-[60rem] h-40 relative"
+        className="w-[40rem] sm:w-[50rem] md:w-[60rem] h-20  relative flex justify-center "
       >
         {/* Gradients */}
-        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
-        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
-        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/2 blur-sm" />
-        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/2" />
+
+        {/* Core Indigo Gradient (Blur) */}
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+
+        {/* Core Indigo Gradient (Solid) */}
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+
+        {/* Inner Sky Blue Gradient (Blur) */}
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+
+        {/* Inner Sky Blue Gradient (Solid) */}
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
         {/* Core component */}
       </motion.div>
     </div>
