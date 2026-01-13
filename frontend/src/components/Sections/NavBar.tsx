@@ -47,15 +47,17 @@ export const Header = () => {
           style={{ backdropFilter: "blur(20px)" }}
         >
           <ul
-            className={`flex items-center p-1 px-5 ${user ? "gap-1" : "gap-4"}`}
+            className={`flex items-center p-1 px-3 sm:px-5 ${
+              user ? "gap-1" : "gap-1 sm:gap-4"
+            }`}
           >
             {/* 1. USER PROFILE SECTION (Only shows if logged in) */}
             {user && (
-              <li className="flex items-center gap-2 pr-4 mr-2 border-r border-white/10">
+              <li className="flex items-center gap-2 pr-2 sm:pr-4 sm:mr-2 border-r border-white/10">
                 {user.avatar != null ? (
                   <img
                     src={user.avatar}
-                    className="w-7 h-7 rounded-full border border-white/20"
+                    className="w-6 h-6  sm:w-7 sm:h-7 rounded-full border border-white/20"
                     alt="avatar"
                   />
                 ) : (
@@ -100,7 +102,7 @@ export const Header = () => {
               <li key={idx}>
                 <a
                   href={item.href}
-                  className="p-2.5  rounded-full block cursor-pointer hover:bg-white/10 hover:scale-110 transition-all duration-200 text-white/90 hover:text-white"
+                  className="p-2 sm:p-2.5  rounded-full block cursor-pointer hover:bg-white/10 hover:scale-110 transition-all duration-200 text-white/90 hover:text-white"
                 >
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -116,12 +118,12 @@ export const Header = () => {
 
             {/* 3. AUTH BUTTON SECTION */}
             {user ? (
-              <li className="ml-2 pl-3 border-l border-white/10 relative">
+              <li className="sm:ml-2 pl-1 border-l border-white/10 relative">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setShowLogoutModal(!showLogoutModal)}
-                      className="cursor-pointer uppercase tracking-wider font-bold bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-full transition-all border border-red-500/30"
+                      className="cursor-pointer uppercase tracking-wider font-bold  text-red-500 hover:text-white p-2 pr-0 rounded-full transition-all"
                     >
                       <MdLogout size={20} />
                     </button>
@@ -137,21 +139,21 @@ export const Header = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="mt-2 absolute flex items-center justify-center flex-col rounded-2xl bg-(--bg-primary) p-3 gap-2"
+                    className="mt-2 absolute right-0 sm:right-auto flex items-center justify-center flex-col rounded-2xl bg-(--bg-primary) p-3 gap-2"
                   >
-                    <p className="text-sm text-white/50">
+                    <p className="text-xs sm:text-sm text-white/50">
                       Are you sure you want to logout?
                     </p>
                     <div className="flex items-center justify-center">
                       <button
                         onClick={handleLogout}
-                        className="m-2 px-4 py-1 cursor-pointer hover:bg-red-600 border border-red-600 text-red-600 hover:text-white rounded-[0.5rem] hover:bg-red-700 transition-all duration-200"
+                        className="m-2 px-3 sm:px-4 py-1 text-sm sm:text-base cursor-pointer hover:bg-red-600 border border-red-600 text-red-600 hover:text-white rounded-[0.5rem] hover:bg-red-700 transition-all duration-200"
                       >
                         Yes
                       </button>
                       <button
                         onClick={() => setShowLogoutModal(!showLogoutModal)}
-                        className="m-2 px-4 py-1 cursor-pointer bg-gray-300 text-gray-800 rounded-[0.5rem] hover:bg-gray-400 transition"
+                        className="m-2 px-3 sm:px-4 py-1 text-sm sm:text-base cursor-pointer bg-gray-300 text-gray-800 rounded-[0.5rem] hover:bg-gray-400 transition"
                       >
                         No
                       </button>
@@ -160,7 +162,7 @@ export const Header = () => {
                 )}
               </li>
             ) : (
-              <li className="ml-2 pl-3 border-l border-white/10 relative">
+              <li className="sm:ml-2 pl-1 border-l border-white/10 relative">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
