@@ -11,6 +11,7 @@ import { FileUpload } from "../ui/file-upload";
 import { X } from "lucide-react";
 import { Spinner } from "../ui/Spinner";
 import { addToast } from "@heroui/toast";
+import { AnimatePresence } from "framer-motion";
 
 const TestimonialForm = () => {
   const auth = useContext(AuthContext);
@@ -29,6 +30,7 @@ const TestimonialForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isModalOpen, closeModal, isUpdate, _id } = useModalStore();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -88,10 +90,6 @@ const TestimonialForm = () => {
       newErrors.testimonial = "Testimonial must be at least 10 characters.";
     else if (testimonial.length > 500)
       newErrors.testimonial = "Testimonial must be 500 characters or less.";
-
-    if (selectedFile && !errors.file) {
-      // file already validated on selection; nothing additional here
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -154,6 +152,7 @@ const TestimonialForm = () => {
         addToast({
           title: "Testimonial Submitted",
           color: "success",
+          variant: "bordered",
         });
       }
       setFormData({
@@ -181,6 +180,7 @@ const TestimonialForm = () => {
       addToast({
         title: "Testimonial Deleted",
         color: "success",
+        variant: "bordered",
       });
       closeModal();
     } catch (err: unknown) {
@@ -247,6 +247,46 @@ const TestimonialForm = () => {
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center backdrop-blur-sm bg-black/20">
       <div className="relative rounded-[20px] overflow-hidden border border-white/10">
+        {showAlert && (
+          <AnimatePresence>
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="w-full max-w-md rounded-2xl bg-(--bg-secondary) p-6 shadow-xl"
+                initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.9, y: 20, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                {/* Header */}
+                <h2 className="text-base">
+                  Are you sure you want to delete your testimonial?
+                </h2>
+
+                {/* Footer */}
+                <div className="mt-6 flex justify-end gap-3">
+                  <button
+                    onClick={() => setShowAlert(false)}
+                    className="rounded-[10px] border px-4 py-2 text-sm bg-(--bg-secondary) hover:bg-(--bg-primary)/50 transition-colors duration-200 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    onClick={handleDelete}
+                    className="rounded-[10px] bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 transition-colors duration-200 cursor-pointer"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        )}
         <BackgroundBeams />
         <motion.form
           onSubmit={handleSubmit}
@@ -354,12 +394,7 @@ const TestimonialForm = () => {
             <label className="text-white/80 text-sm">
               Display Picture (Optional)
             </label>
-            {/* <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="text-white text-sm border border-white"
-            /> */}
+
             <FileUpload onChange={handleFileUpload} />
             {errors.file && (
               <p className="text-red-400 text-xs">{errors.file}</p>
@@ -397,7 +432,7 @@ const TestimonialForm = () => {
             {isUpdate ? (
               <button
                 type="button"
-                onClick={handleDelete}
+                onClick={() => setShowAlert(true)}
                 className="mt-5 bg-red-800 w-[50%] text-white text-[15px] font-medium rounded-[10px] p-2 cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
               >
                 Delete Testimonial
