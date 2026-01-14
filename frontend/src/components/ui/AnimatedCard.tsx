@@ -5,7 +5,10 @@ interface AnimatedCardProps {
   backContent?: React.ReactNode;
 }
 
-export default function App({ frontContent, backContent }: AnimatedCardProps) {
+export default function AnimateCard({
+  frontContent,
+  backContent,
+}: AnimatedCardProps) {
   const customStyles = `
 
 .container {
@@ -39,6 +42,8 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
       transition: all 300ms ease-in-out;
     }
 
+   
+
     .card-container:hover .back-blur {
       filter: blur(20px);
       opacity: 0;
@@ -64,22 +69,12 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
     }
 
    .back-gradient {
-      border-radius: 0.75rem;
-    }
-   
-    .back-gradient::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      padding: 2px;
-      border-radius: inherit;
-      background: linear-gradient(var(--theme_1), var(--theme_3), var(--theme_2));
-      -webkit-mask: 
-         linear-gradient(#fff 0 0) content-box, 
-         linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-    }
+  /* Apply this to the div itself, not a ::before */
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  background: 
+    linear-gradient(var(--theme_1), var(--theme_3), var(--theme_2)) border-box;
+}
 
     .circle-anim {
       animation: floating 10s infinite linear;
@@ -107,20 +102,13 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
   return (
     <>
       <style>{customStyles}</style>
-      <div className="card-container w-60 h-80 relative group rounded-xl shadow-2xl">
+      <div className="card-container w-42 h-60 sm:w-50 sm:h-70 lg:w-60 lg:h-80 relative group shadow-2xl">
         <div className="h-full w-full shadow-xl shadow-[#000000ee] rounded-xl relative">
           <div className="back-blur back-gradient flex justify-center items-center bg-[#151515]">
             <div className="absolute inset-0 back-gradient rounded-xl" />
 
             <div className="container absolute w-[99%] h-[99%] bg-[#0f0f0f] rounded-2xl text-white flex flex-col justify-center items-center gap-8 p-4">
-              {frontContent || (
-                <>
-                  <h2 className="text-2xl font-bold">Front Side</h2>
-                  <p className="text-center text-sm text-gray-400">
-                    Hover to see the blur transition effect
-                  </p>
-                </>
-              )}
+              {frontContent}
             </div>
           </div>
 
@@ -150,16 +138,8 @@ export default function App({ frontContent, backContent }: AnimatedCardProps) {
               ></div>
             </div>
 
-            <div className="absolute inset-0 flex flex-col justify-center items-center p-4 z-20">
-              {backContent || (
-                <>
-                  <h2 className="text-2xl font-bold mb-4">Back Side</h2>
-                  <p className="text-center text-sm text-gray-300">
-                    Beautiful blue gradient background with animated blur
-                    effects
-                  </p>
-                </>
-              )}
+            <div className="absolute inset-0 flex flex-col justify-center items-center  z-20">
+              {backContent}
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ function ProjectsHeading() {
     <div
       id="projects"
       ref={containerRef}
-      className="w-full flex flex-col px-2 justify-center mb-10"
+      className="w-full flex flex-col px-2 justify-center mb-10 overflow-hidden"
     >
       <motion.h1
         style={{ x: xRight, fontFamily: "Lora, serif" }}

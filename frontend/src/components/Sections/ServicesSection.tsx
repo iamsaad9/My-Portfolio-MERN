@@ -114,7 +114,9 @@ function Services({ services }: ServicesProps) {
           </div>
         ) : (
           <div className="flex items-center justify-center h-full w-full gap-5 my-10">
-            <p className="text-xl">Something doesnt seem right...</p>
+            <p className="text-base sm:text-xl">
+              Something doesnt seem right...
+            </p>
             <span className="loader"></span>
           </div>
         )}

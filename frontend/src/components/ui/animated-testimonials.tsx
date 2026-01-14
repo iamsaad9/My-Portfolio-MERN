@@ -85,7 +85,7 @@ export const AnimatedTestimonials = ({
   const hasAlreadySubmitted = !!userTestimonial;
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-10 font-sans antialiased md:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
+    <div className=" w-[80%] sm:mx-auto md:max-w-sm px-4 py-10 font-sans antialiased md:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
       <div className="flex justify-between items-center text-center mb-10">
         <Shuffle
           text="Testimonials"
@@ -130,7 +130,7 @@ export const AnimatedTestimonials = ({
       {!hasDataAtAll ? (
         /* CASE 1: Database Error / No Data fetched */
         <div className="flex flex-col items-center justify-center py-10 gap-5">
-          <p className="text-xl text-white/80 text-center">
+          <p className="text-base sm:text-xl text-white/80 text-center">
             Something doesn't seem right... <br />
             <span className="text-sm">Could not fetch testimonials.</span>
           </p>

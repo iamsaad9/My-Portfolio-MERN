@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import useLoadingStore from "@/context/store/useLoadingStore";
 import { MdErrorOutline } from "react-icons/md";
 import { X } from "lucide-react";
+import { HiOutlineSignalSlash } from "react-icons/hi2";
 
 interface Project {
   title: string;
@@ -216,16 +217,16 @@ const Home = () => {
   return (
     <>
       {isDatabaseDown.isDown && isDatabaseDown.displayMessage && (
-        <div className="p-3 m-5 flex items-center  gap-2 z-[99999] bg-red-700/20 rounded-2xl border border-red-700  fixed">
-          <MdErrorOutline size={20} color="red" />
+        <div className="p-3 m-5 flex items-center  gap-2 z-[99999] bg-red-700/20 rounded-2xl border border-red-700  fixed bottom-5 ">
+          <MdErrorOutline size={20} color="red" className="hidden sm:block" />
+          <HiOutlineSignalSlash size={20} color="red" className="sm:hidden" />
 
-          <p className="text-sm text-white">
+          <p className="text-sm hidden sm:block text-white">
             Failed to fetch data. Please try again later.
           </p>
 
           <X
-            size={20}
-            className="text-white cursor-pointer"
+            className="text-white cursor-pointer size-3 sm:size-4"
             onClick={() =>
               setIsDatabaseDown((prev) => ({ ...prev, displayMessage: false }))
             }
@@ -248,7 +249,9 @@ const Home = () => {
           <ProjectCarousel specialProjects={specialProjects} />
         ) : (
           <div className="flex items-center justify-center h-full w-full gap-5 my-10">
-            <p className="text-xl">Something doesnt seem right...</p>
+            <p className="text-base sm:text-xl">
+              Something doesnt seem right...
+            </p>
             <span className="loader"></span>
           </div>
         )}

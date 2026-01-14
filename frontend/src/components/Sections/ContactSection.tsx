@@ -79,12 +79,13 @@ export default function ContactForm() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
+      className=""
     >
       {/* <h2 className={`text-4xl font-semibold text-(--text) mb-10 `}>
         Get in Touch
       </h2> */}
 
-      <HeroHighlight className="m-5  rounded-2xl flex flex-col items-center justify-center px-4 md:px-12  w-full sm:w-[80%] lg:w-auto gap-10">
+      <HeroHighlight className="m-5  rounded-2xl flex flex-col items-center justify-center px-4 md:px-12   gap-10">
         <div className="-text-white text-4xl p-2  font-semibold">
           <HighlightText
             text="Get In Touch"
@@ -94,7 +95,7 @@ export default function ContactForm() {
           />
         </div>
 
-        <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="w-full sm:max-w-5xl grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Form Section */}
           <form
             onSubmit={handleSubmit}

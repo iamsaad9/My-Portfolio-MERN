@@ -16,11 +16,11 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
     blur={8}
     speed="fast"
     waveOpacity={0.3}
-    containerClassName="min-h-[400px] w-full rounded-lg overflow-hidden  my-10"
-    className="m-5 sm:m-0 sm:w-[44rem] lg:w-[50rem] xl:w-[56rem]   h-full flex items-center justify-center"
+    containerClassName="md:h-[400px]  w-full rounded-lg overflow-hidden"
+    className="sm:w-[44rem] lg:w-[50rem] xl:w-[56rem]   flex items-center justify-center"
   >
     <div
-      className="h-full rounded-3xl overflow-hidden flex flex-col-reverse sm:flex-row"
+      className="h-full rounded-3xl overflow-hidden flex flex-col-reverse sm:flex-row "
       style={{ backdropFilter: "blur(20px)" }}
     >
       {about != undefined ? (
@@ -72,7 +72,7 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center h-full w-2xl gap-5">
+        <div className="flex flex-col items-center justify-center  h-full w-2xl gap-5">
           <Spinner size={35} />
           <h1 className="text-2xl">Loading About</h1>
         </div>

@@ -25,7 +25,7 @@ export const FileUpload = ({
 
   const handleFileChange = (newFiles: File[]) => {
     setFiles(newFiles[0]);
-    onChange && onChange(newFiles[0]);
+    onChange?.(newFiles[0]);
   };
 
   const handleClick = () => {
