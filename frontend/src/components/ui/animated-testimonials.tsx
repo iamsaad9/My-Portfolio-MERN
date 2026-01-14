@@ -95,35 +95,22 @@ export const AnimatedTestimonials = ({
             fontFamily: "inherit",
           }}
         />
-
-        {hasDataAtAll && (
-          <div className="flex gap-5 justify-center items-center">
-            {/* 1. Check if the CURRENT slide belongs to the logged-in user */}
-            {approvedTestimonials[active]?.email === user?.email ? (
-              <MdEditNote
-                size={30}
-                className="cursor-pointer hover:scale-115 hover:text-white/70 transition-all duration-200"
-                onClick={() =>
-                  handleUpdateForm(approvedTestimonials[active]._id)
-                }
-              />
-            ) : /* 2. If it's NOT the user's slide, check if they have a testimonial anywhere else.
-         If they DON'T have one anywhere, show the Create button.
-         If they DO have one elsewhere, show nothing (null). */
-            !hasAlreadySubmitted ? (
-              <button
-                onClick={handleOpenForm}
-                className="group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]"
-              >
-                <div className="sign flex items-center justify-center w-full text-white text-[2.2em] transition-all duration-300 group-hover:w-[35%]">
-                  +
-                </div>
-                <div className="text absolute right-0 w-0 opacity-0 text-white text-[1.2em] font-semibold transition-all duration-300 group-hover:opacity-100 group-hover:w-[60%] group-hover:pr-[10px] whitespace-nowrap">
-                  Create
-                </div>
-              </button>
-            ) : null}
-          </div>
+        {user ? (
+          /* LOGGED IN VIEW */
+          approvedTestimonials?.[active]?.email === user.email ? (
+            /* 1. User is looking at their own testimonial -> Edit */
+            <MdEditNote
+              size={30}
+              className="cursor-pointer hover:scale-115 hover:text-white/70 transition-all duration-200"
+              onClick={() => handleUpdateForm(approvedTestimonials[active]._id)}
+            />
+          ) : !hasAlreadySubmitted ? (
+            /* 2. User hasn't submitted yet (or is looking at someone else's) -> Create */
+            <CreateButton onClick={handleOpenForm} />
+          ) : null
+        ) : (
+          /* LOGGED OUT VIEW */
+          <CreateButton onClick={handleOpenForm} />
         )}
       </div>
 
@@ -144,7 +131,7 @@ export const AnimatedTestimonials = ({
         </div>
       ) : (
         /* CASE 3: Normal Display */
-        <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
+        <div className="relative grid grid-cols-1 gap-10 md:grid-cols-2">
           <div>
             <div className="relative h-80 w-full">
               <AnimatePresence>
@@ -205,7 +192,10 @@ export const AnimatedTestimonials = ({
               <p className="text-sm text-gray-500">
                 {approvedTestimonials[active]?.designation}
               </p>
-              <motion.p className="mt-8 h-40 overflow-auto text-lg text-white">
+              <motion.p
+                className=" mt-8 h-40 overflow-auto text-lg text-white"
+                id="feedbackDiv"
+              >
                 {approvedTestimonials[active]?.testimonial
                   .split(" ")
                   .map((word, index) => (
@@ -245,3 +235,17 @@ export const AnimatedTestimonials = ({
     </div>
   );
 };
+
+const CreateButton = ({ onClick }: { onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className="group flex items-center justify-start w-[35px] h-[35px] rounded-full border-none cursor-pointer relative overflow-hidden shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-400 hover:w-[120px] active:translate-x-[2px] active:translate-y-[2px]"
+  >
+    <div className="sign flex items-center justify-center w-full text-white text-[2.2em] transition-all duration-300 group-hover:w-[35%]">
+      +
+    </div>
+    <div className="text absolute right-0 w-0 opacity-0 text-white text-[1.2em] font-semibold transition-all duration-300 group-hover:opacity-100 group-hover:w-[60%] group-hover:pr-[10px] whitespace-nowrap">
+      Create
+    </div>
+  </button>
+);
