@@ -2,7 +2,8 @@ import TextPressure from "../ui/shadcn-io/text-pressure";
 import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
+import Orb from "../Orb";
+import LaserFlow from "../LaserFlow";
 const useIsMobile = (breakpoint: number) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -26,19 +27,45 @@ const useIsMobile = (breakpoint: number) => {
 };
 
 const Hero = () => {
-  const isMobileDevice = useIsMobile(450);
+  const isMobileDevice = useIsMobile(1000);
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden rounded-md">
+    <div className="h-screen w-full  flex flex-col items-center justify-center relative overflow-hidden rounded-md">
       <div
         className={cn(
-          "absolute inset-0 opacity-50",
+          "absolute inset-0 opacity-20",
           "[background-size:60px_60px]",
           "[background-image:linear-gradient(to_right,#e4e4e7_2px,transparent_1px),linear-gradient(to_bottom,#171616_2px,transparent_1px)]",
           "[background-image:linear-gradient(to_right,#262626_2px,transparent_1px),linear-gradient(to_bottom,#171616_2px,transparent_1px)]"
         )}
       />
+      <div className={`absolute inset-0 ${isMobileDevice ? "-mt-10" : ""}`}>
+        {isMobileDevice ? (
+          <Orb
+            hue={0}
+            hoverIntensity={0.1}
+            rotateOnHover
+            forceHoverState={false}
+          />
+        ) : (
+          <LaserFlow
+            color="#3b82f6"
+            wispDensity={1}
+            flowSpeed={0.35}
+            verticalSizing={5}
+            horizontalSizing={0.5}
+            fogIntensity={0.45}
+            fogScale={0.3}
+            wispSpeed={15}
+            wispIntensity={5}
+            flowStrength={0.25}
+            decay={1.1}
+            horizontalBeamOffset={0}
+            verticalBeamOffset={-0.5}
+          />
+        )}
+      </div>
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       {/* Radial gradient for the container to give a faded look */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

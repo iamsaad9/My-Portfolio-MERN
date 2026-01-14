@@ -8,6 +8,7 @@ import * as TbIcons from "react-icons/tb";
 import * as RiIcons from "react-icons/ri";
 import * as DiIcons from "react-icons/di";
 import type { IconType } from "react-icons";
+import { HighlightText } from "../ui/shadcn-io/highlight-text";
 
 type IconPack = Record<string, IconType>;
 
@@ -57,8 +58,13 @@ const SkillsSection = ({ skills }: SkillsSectionProps) => {
       className="flex items-center justify-center max-w-7xl mx-auto flex-col"
       style={{ fontFamily: "Lora, serif" }}
     >
-      <TextHoverEffect text="SKILLS" />
-
+      {/* <TextHoverEffect text="SKILLS" /> */}
+      <HighlightText
+        text="SKILLS"
+        inView={true}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="text-7xl px-4 sm:text-5xl md:text-6xl lg:text-9xl rounded-[0.5rem] my-10"
+      />
       {skills.length != 0 ? (
         <div className="w-[80%] grid grid-cols-3 gap-y-14 content-center place-items-center">
           {skills.map((skill, index) => (

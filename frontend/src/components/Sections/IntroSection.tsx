@@ -17,7 +17,7 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
     speed="fast"
     waveOpacity={0.3}
     containerClassName="min-h-[400px] w-full rounded-lg overflow-hidden  my-10"
-    className="sm:w-[44rem] lg:w-[50rem] xl:w-[56rem]   h-full flex items-center justify-center"
+    className="m-5 sm:m-0 sm:w-[44rem] lg:w-[50rem] xl:w-[56rem]   h-full flex items-center justify-center"
   >
     <div
       className="h-full rounded-3xl overflow-hidden flex flex-col-reverse sm:flex-row"
@@ -25,7 +25,7 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
     >
       {about != undefined ? (
         <>
-          <div className="max-h-[30rem] sm:h-auto sm:w-[50%] overflow-hidden">
+          <div className="max-h-[24rem] sm:h-auto sm:w-[50%] overflow-hidden">
             <img
               src={about?.imageUrl}
               alt="saadmasood"
@@ -40,7 +40,7 @@ const IntroSection = ({ about }: { about: About | undefined }) => (
               About Me
             </h1>
             <p
-              className="sm:text-sm md:text-base xl:text-lg"
+              className="text-lg sm:text-sm md:text-base xl:text-lg"
               style={{ fontFamily: "Poiret One, sans-serif" }}
             >
               Hi, I am{" "}

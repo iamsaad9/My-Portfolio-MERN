@@ -22,8 +22,8 @@ const IntroSummary = () => {
               />
             </motion.div>
             <span style={{ fontFamily: "Lora, serif" }}>
-              <GradientText text="CSS Enthusiast"></GradientText>, and React &
-              NextJs Aficionado.
+              <GradientText text="CSS Enthusiast" />, and React & NextJs
+              Aficionado.
             </span>
           </div>
 

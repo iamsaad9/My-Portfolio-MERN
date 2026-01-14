@@ -201,7 +201,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
           transform: `scale(1, ${scaleY})`,
           transformOrigin: "center top",
           margin: 0,
-          fontWeight: 100,
+          fontWeight: 200,
           color: stroke ? undefined : textColor,
         }}
       >
