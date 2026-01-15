@@ -48,10 +48,7 @@ app.use(
 );
 
 // This handles the 'OPTIONS' preflight request globally
-app.options("*", cors());
-
-// IMPORTANT: Handle preflight requests for all routes
-app.options("*", cors());
+app.options("/*splat", cors());
 app.use(passport.initialize());
 
 // Routes
