@@ -100,7 +100,7 @@ function Services({ services }: ServicesProps) {
                 {services.map((item, index) => (
                   <CarouselItem
                     key={index}
-                    className="md:basis-1/2 lg:basis-1/3"
+                    className="basis-full lg:basis-1/2 xl:basis-1/2 2xl:basis-1/3"
                   >
                     <div className="p-1">
                       <ThreeDCardDemo item={item} />

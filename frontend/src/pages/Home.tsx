@@ -243,6 +243,7 @@ const Home = () => {
         {allProjects && allProjects.length > 0 && (
           <HeroParallaxDemo projects={projectImages} />
         )}
+
         <Services services={services} />
         <ProjectsHeading />
         {allProjects && allProjects.length > 0 ? (

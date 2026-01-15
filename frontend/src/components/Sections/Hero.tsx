@@ -2,8 +2,8 @@ import TextPressure from "../ui/shadcn-io/text-pressure";
 import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Orb from "../Orb";
-import LaserFlow from "../LaserFlow";
+import Orb from "../ui/Orb";
+import LaserFlow from "../ui/LaserFlow";
 const useIsMobile = (breakpoint: number) => {
   const [isMobile, setIsMobile] = useState(false);
 

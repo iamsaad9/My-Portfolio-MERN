@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import "./TrueFocus.css";
 
 interface TrueFocusProps {
   sentence?: string;
@@ -18,7 +17,7 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
   separator = " ",
   manualMode = false,
   blurAmount = 5,
-  borderColor = "green",
+  borderColor = "#3b82f6",
   glowColor = "rgba(0, 255, 0, 0.6)",
   animationDuration = 0.5,
   pauseBetweenAnimations = 1,
@@ -43,7 +42,9 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
   useEffect(() => {
     if (!manualMode) {
       const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev === null ? 0 : (prev + 1) % words.length));
+        setCurrentIndex((prev) =>
+          prev === null ? 0 : (prev + 1) % words.length
+        );
       }, (animationDuration + pauseBetweenAnimations) * 1000);
 
       return () => clearInterval(interval);
@@ -103,7 +104,6 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
                 ? `blur(0px)`
                 : `blur(${blurAmount}px)`,
               transition: `filter ${animationDuration}s ease`,
-              // allow CSS custom properties via cast
               ...({
                 "--border-color": borderColor,
                 "--glow-color": glowColor,

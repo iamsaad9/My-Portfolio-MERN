@@ -64,15 +64,28 @@ const DynamicIcon = ({
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <div className="h-full w-7xl flex flex-col gap-5 p-5 rounded-2xl border-2 border-[#333] mx-auto">
-      <img src={project.coverImage} alt="" className="rounded-2xl" />
-      <div className="w-full flex flex-col gap-5">
-        <div className="flex items-center justify-between">
-          <h1 className="text-5xl font-semibold">{project.title}</h1>
-          <div>
-            <ul className="flex gap-4">
+    <div className="h-full w-full max-w-7xl flex flex-col gap-3 md:gap-5 p-3 md:p-5 rounded-2xl border-2 border-[#333] mx-auto bg-black/20">
+      <div className="w-full overflow-hidden rounded-xl">
+        <img
+          src={project.coverImage}
+          alt={project.title}
+          className="w-full object-cover hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+
+      <div className="w-full flex flex-col gap-3 md:gap-5">
+        <div className="flex flex-row items-center justify-between gap-3">
+          <h1 className="text-2xl md:text-5xl font-semibold break-words">
+            {project.title}
+          </h1>
+
+          <div className="flex-shrink-0">
+            <ul className="flex flex-wrap gap-3 md:gap-4">
               {project.techStack.map((tech, index) => (
-                <li key={index}>
+                <li
+                  key={index}
+                  className="opacity-80 hover:opacity-100 transition-opacity"
+                >
                   <DynamicIcon iconName={tech} size={20} />
                 </li>
               ))}
@@ -80,17 +93,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
-          <p className="text-white/50 w-[70%]">{project.description}</p>
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <p className="text-sm md:text-base text-white/50 w-full md:w-[70%] leading-relaxed">
+            {project.description}
+          </p>
 
-          <div className="flex gap-5 px-5 items-center justify-center">
+          <div className="flex gap-5 items-center justify-start md:justify-center w-full ">
             {project.gitHubLink && (
-              <a href={project.gitHubLink}>
+              <a href={project.gitHubLink} target="_blank" rel="noreferrer">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <FaGithub
-                      size={30}
-                      className="hover:scale-110 transition-all duration-200"
+                      size={20}
+                      className="hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -100,12 +115,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               </a>
             )}
             {project.vercelLink && (
-              <a href="">
+              <a href={project.vercelLink} target="_blank" rel="noreferrer">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <SiVercel
-                      size={30}
-                      className="hover:scale-110 transition-all duration-200"
+                      size={20}
+                      className="hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70"
                     />
                   </TooltipTrigger>
                   <TooltipContent>

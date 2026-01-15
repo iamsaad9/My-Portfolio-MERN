@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import "./LaserFlow.css";
 
 interface LaserFlowProps {
   className?: string;

@@ -8,7 +8,7 @@ import * as TbIcons from "react-icons/tb";
 import * as RiIcons from "react-icons/ri";
 import * as DiIcons from "react-icons/di";
 import type { IconType } from "react-icons";
-import TrueFocus from "../TrueFocus";
+import TrueFocus from "../ui/TrueFocus";
 
 type IconPack = Record<string, IconType>;
 
@@ -60,7 +60,7 @@ const SkillsSection = ({ skills }: SkillsSectionProps) => {
         sentence="My Skills"
         manualMode={false}
         blurAmount={5}
-        borderColor="blue"
+        borderColor="#3b82f6"
         animationDuration={2}
         pauseBetweenAnimations={1}
       />
