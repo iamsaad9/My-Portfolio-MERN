@@ -15,31 +15,40 @@ import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://saad-masood.vercel.app",
-];
 
 // Middlewares
 app.use(express.json());
 app.use(cookieParser()); // Required to read the JWT from cookies later
+const allowedOrigins = [
+  "https://saad-masood.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
-        console.log("Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true,
+    credentials: true, // MUST be true for Passport/Cookies
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "Accept",
+    ],
   })
 );
+
+// This handles the 'OPTIONS' preflight request globally
+app.options("*", cors());
 
 // IMPORTANT: Handle preflight requests for all routes
 app.options("*", cors());
