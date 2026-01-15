@@ -32,12 +32,19 @@ app.use(
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
+        // You can log the blocked origin here to debug
+        console.log("Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // Required for cookies/JWT
+    credentials: true, // Required for cookies/Passport
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
+
+// IMPORTANT: Handle preflight requests for all routes
+app.options("*", cors());
 app.use(passport.initialize());
 
 // Routes
