@@ -19,7 +19,7 @@ export function AnimatedTestimonialsDemo({
   return (
     <div
       id="testimonials"
-      className="relative py-20 flex flex-col justify-center items-center gap-5 w-full"
+      className="relative  py-20 flex flex-col justify-center items-center gap-5 w-full"
     >
       <BackgroundBeams />
       <AnimatedTestimonials testimonials={testimonials} />

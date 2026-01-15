@@ -85,7 +85,7 @@ export const AnimatedTestimonials = ({
   const hasAlreadySubmitted = !!userTestimonial;
 
   return (
-    <div className=" w-[80%] sm:mx-auto md:max-w-sm px-4 py-10 font-sans antialiased md:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
+    <div className=" w-[90%] sm:mx-auto md:max-w-3xl p-5 lg:py-10 font-sans antialiased lg:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
       <div className="flex justify-between items-center text-center mb-10">
         <Shuffle
           text="Testimonials"
@@ -132,8 +132,12 @@ export const AnimatedTestimonials = ({
       ) : (
         /* CASE 3: Normal Display */
         <div className="relative grid grid-cols-1 gap-10 md:grid-cols-2">
-          <div>
-            <div className="relative h-80 w-full">
+          <div className="flex items-center justify-center">
+            {/* Parent Container: 
+        - aspect-square ensures it remains a perfect box for stacking 
+        - w-full ensures it fills the 50% column provided by the grid
+    */}
+            <div className="relative aspect-square w-full max-w-[300px] sm:max-w-[350px] md:max-w-full flex items-center justify-center">
               <AnimatePresence>
                 {approvedTestimonials.map((testimonial, index) => (
                   <motion.div
@@ -152,7 +156,7 @@ export const AnimatedTestimonials = ({
                       zIndex: isActive(index)
                         ? 40
                         : approvedTestimonials.length + 2 - index,
-                      y: isActive(index) ? [0, -80, 0] : 0,
+                      y: isActive(index) ? [0, -40, 0] : 0,
                     }}
                     exit={{
                       opacity: 0,
@@ -161,7 +165,11 @@ export const AnimatedTestimonials = ({
                       rotate: randomRotateY(),
                     }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="absolute inset-0 origin-bottom"
+                    /* The Card: 
+               - Uses absolute inset-0 to fill the aspect-square parent
+               - No more hardcoded pixel widths that exceed the parent grid
+            */
+                    className="absolute inset-0 w-full h-full origin-bottom"
                   >
                     <img
                       src={
@@ -171,7 +179,7 @@ export const AnimatedTestimonials = ({
                       }
                       alt={testimonial.name}
                       draggable={false}
-                      className="h-full w-full rounded-3xl object-cover object-top"
+                      className="h-full w-full rounded-2xl md:rounded-3xl object-cover object-top shadow-2xl border border-white/10"
                     />
                   </motion.div>
                 ))}
@@ -208,14 +216,14 @@ export const AnimatedTestimonials = ({
                         ease: "easeInOut",
                         delay: 0.02 * index,
                       }}
-                      className="inline-block"
+                      className="inline-block text-sm md:text-base"
                     >
                       {word}&nbsp;
                     </motion.span>
                   ))}
               </motion.p>
             </motion.div>
-            <div className="flex gap-4 pt-12 md:pt-0">
+            <div className="flex gap-4 pt-10 md:pt-0">
               <button
                 onClick={handlePrev}
                 className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-neutral-800 cursor-pointer"

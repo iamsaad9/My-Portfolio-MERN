@@ -246,7 +246,7 @@ const TestimonialForm = () => {
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center backdrop-blur-sm bg-black/20">
-      <div className="relative rounded-[20px] overflow-hidden border border-white/10">
+      <div className="relative rounded-[20px] overflow-hidden border border-white/10 w-[90%] sm:w-[70%] md:w-[520px] ">
         {showAlert && (
           <AnimatePresence>
             <motion.div
@@ -290,7 +290,7 @@ const TestimonialForm = () => {
         <BackgroundBeams />
         <motion.form
           onSubmit={handleSubmit}
-          className="flex relative flex-col p-8 bg-transparent gap-5  overflow-hidden w-[520px]  font-sans shadow-2xl"
+          className="flex relative flex-col p-5 sm:p-8 bg-transparent gap-3  overflow-hidden  font-sans shadow-2xl"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
@@ -306,7 +306,7 @@ const TestimonialForm = () => {
           </button>
 
           {/* Header */}
-          <div className="mb-2">
+          <div>
             <TypingText
               text={[
                 "Write Your Testimonial.",
@@ -321,30 +321,32 @@ const TestimonialForm = () => {
               startOnVisible={true}
               textColors={["white"]}
               variableSpeed={{ min: 50, max: 120 }}
-              className="text-3xl"
+              className="text-xl md:text-3xl"
             />
           </div>
 
           {/* User Info Display */}
-          <div className="flex items-center gap-3 p-3 rounded-lg ">
+          <div className="flex items-center gap-3 py-2 rounded-lg ">
             {user?.avatar != null ? (
               <img
                 src={user?.avatar}
                 alt={user?.name}
-                className="w-10 h-10 rounded-full object-cover border-2 border-(--theme_1)"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-(--theme_1)"
               />
             ) : (
-              <RxAvatar className="w-10 h-10 rounded-full object-cover " />
+              <RxAvatar className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover " />
             )}
 
             <div className="flex-1 flex flex-col">
-              <p className="text-white text-lg">{user?.name}</p>
+              <p className="text-white text-sm sm:text-base md:text-base">
+                {user?.name}
+              </p>
               <p className="text-white/60 text-xs">{user?.email}</p>
             </div>
           </div>
 
           {/* Name Field */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="name" className="text-white/80 text-sm font-medium">
               Name <span className="text-red-400">*</span>
             </label>
@@ -366,7 +368,7 @@ const TestimonialForm = () => {
           </div>
 
           {/* Designation Field */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label
               htmlFor="designation"
               className="text-white/80 text-sm font-medium"
@@ -390,7 +392,7 @@ const TestimonialForm = () => {
             )}
           </div>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 md:gap-1">
             <label className="text-white/80 text-sm">
               Display Picture (Optional)
             </label>
@@ -402,7 +404,7 @@ const TestimonialForm = () => {
           </div>
 
           {/* Testimonial Field */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label
               htmlFor="testimonial"
               className="text-white/80 text-sm font-medium"
@@ -416,7 +418,7 @@ const TestimonialForm = () => {
               value={formData.testimonial}
               onChange={handleChange}
               placeholder="Share your feedback..."
-              className="  h-20 p-4   resize-none whitespace-pre-line  bg-(--bg-secondary) rounded-[0.5rem] text-white max-w-full"
+              className="  h-20 md:h-16 p-4   resize-none whitespace-pre-line  bg-(--bg-secondary) rounded-[0.5rem] text-white max-w-full"
             />
 
             <p className="text-white/40 text-xs">
@@ -442,7 +444,7 @@ const TestimonialForm = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-5 bg-linear-to-r from-(--theme_1) to-(--theme_2) text-white text-[15px] font-medium rounded-[10px] p-2 w-full cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
+              className="mt-3 bg-linear-to-r from-(--theme_1) to-(--theme_2) text-white text-[15px] font-medium rounded-[10px] p-2 w-full cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
             >
               {isSubmitting ? (
                 <div className="flex items-center justify-center gap-2">
