@@ -99,7 +99,7 @@ router.post("/login", (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // true in production
-      sameSite: "none",
+      sameSite: "lax",
     });
 
     return res.json({ message: "Logged in successfully", user });
@@ -111,7 +111,7 @@ router.get("/logout", (req, res) => {
   // 1. Clear the cookie by name ('token')
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false, // Must match your login setting (false for localhost)
+    secure: process.env.NODE_ENV === "production", // Must match your login setting (false for localhost)
     sameSite: "none",
     path: "/", // Ensure path is consistent
   });
