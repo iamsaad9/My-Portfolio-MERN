@@ -112,7 +112,7 @@ router.get("/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: false, // Must match your login setting (false for localhost)
-    sameSite: "lax",
+    sameSite: "none",
     path: "/", // Ensure path is consistent
   });
 
