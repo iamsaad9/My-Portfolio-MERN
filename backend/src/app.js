@@ -1,4 +1,3 @@
-// dotenv.config({ path: "./src/.env" }); // MUST be first
 import "./loadEnv.js";
 import express from "express";
 import projectRoutes from "./routes/projectRoutes.js";
@@ -8,17 +7,18 @@ import testimonialRoutes from "./routes/testimonialRoutes.js";
 import aboutRoutes from "./routes/aboutRoutes.js";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
-import passport from "passport"; // 1. Add this
-import "./config/passport.js"; // 2. Add this (Important: trigger the strategy setup)
-import cookieParser from "cookie-parser"; // 3. Add this for JWT reading
+import passport from "passport";
+import "./config/passport.js";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middlewares
-app.use(express.json());
-app.use(cookieParser()); // Required to read the JWT from cookies later
+// 1. TRUST PROXY (Must be at the top)
+app.set("trust proxy", 1);
+
+// 2. CORS CONFIGURATION
 const allowedOrigins = [
   "https://saad-masood.vercel.app",
   "http://localhost:5173",
@@ -27,16 +27,14 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
-
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // MUST be true for Passport/Cookies
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
@@ -44,25 +42,24 @@ app.use(
       "X-Requested-With",
       "Accept",
     ],
-  })
+  }),
 );
 
-// This handles the 'OPTIONS' preflight request globally
-app.options("/*splat", cors());
+// 3. MIDDLEWARES
+app.use(express.json());
+app.use(cookieParser());
 app.use(passport.initialize());
 
-// Routes
+// 4. ROUTES
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/services", servicesRoutes);
 app.use("/api/about", aboutRoutes);
-
-//authRoutes
-app.use("/auth", authRoutes);
+app.use("/auth", authRoutes); // This contains your login logic
 
 connectDB();
 
 app.listen(port, () => {
-  console.log("Server is running on port", port);
+  console.log(`Server is running on port ${port}`);
 });
