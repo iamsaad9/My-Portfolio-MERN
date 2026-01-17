@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { FaEye, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { SiVercel } from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
 import SuperToggleButton from "../ui/ProjectButton";
