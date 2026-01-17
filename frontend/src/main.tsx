@@ -19,8 +19,8 @@ createRoot(document.getElementById("root")!).render(
         <LoginForm />
         <TestimonialForm />
         <HeroUIProvider>
-          <Header />
           <ToastProvider />
+          <Header />
           <App />
           <Footer />
         </HeroUIProvider>

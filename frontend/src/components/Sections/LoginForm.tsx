@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { X } from "lucide-react";
 import useLoginStore from "@/context/store/useLoginStore";
 import axios from "axios";
+import { addToast } from "@heroui/toast";
 
 interface Loading {
   isLoading: boolean;
@@ -79,17 +80,29 @@ const LoginForm = () => {
       });
 
       if (login) {
-        alert("Logged in!");
         window.location.reload();
       } else {
-        alert("Registered! Now please log in.");
+        addToast({
+          title: "Registered Successfully!",
+          color: "success",
+          variant: "bordered",
+        });
         setIsLogin(true);
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        alert(err.response?.data?.message || "Something went wrong");
+        addToast({
+          title: "Something went wrong",
+          description: err.response?.data?.message,
+          color: "danger",
+          variant: "bordered",
+        });
       } else {
-        alert("Something went wrong");
+        addToast({
+          title: "Something went wrong",
+          color: "danger",
+          variant: "bordered",
+        });
       }
     } finally {
       setFormLoading({ isLoading: false, status: "" });

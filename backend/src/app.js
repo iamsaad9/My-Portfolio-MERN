@@ -19,13 +19,36 @@ const port = process.env.PORT || 3000;
 // Middlewares
 app.use(express.json());
 app.use(cookieParser()); // Required to read the JWT from cookies later
+const allowedOrigins = [
+  "https://saad-masood.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Be specific for cookies to work
-    credentials: true,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // MUST be true for Passport/Cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "Accept",
+    ],
   })
 );
 
+// This handles the 'OPTIONS' preflight request globally
+app.options("/*splat", cors());
 app.use(passport.initialize());
 
 // Routes
