@@ -19,8 +19,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_DB_URL;
+    console.log("Fetching from:", `${apiUrl}/auth/status`); // Check this in the browser console
+
     axios
-      .get(`${import.meta.env.VITE_DB_URL}/auth/status`, {
+      .get(`${apiUrl}/auth/status`, {
         withCredentials: true,
       })
       .then((res) => setUser(res.data.user || res.data))
