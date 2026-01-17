@@ -90,7 +90,6 @@ const Home = () => {
         throw new Error(`Server responded with status: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Fetched skills:", data);
       setSkills(data);
     } catch (error) {
       console.error("fetchSkills Error:", error);
@@ -123,13 +122,11 @@ const Home = () => {
         throw new Error(`Server responded with status: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Fetched projects:", data);
       const filteredProjects = filterProjects(data);
       const specialProjects = filterSpecialProjects(data);
       setAllProjects(filteredProjects);
       setSpecialProjects(specialProjects);
       setProjectImages(getProjectImages(data));
-      console.log("Project images:", getProjectImages(data));
     } catch (error) {
       console.log("Error fetching projects:", error);
       throw error;
@@ -143,7 +140,6 @@ const Home = () => {
         throw new Error(`Server responded with status: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Fetched services:", data);
       setServices(data);
     } catch (error) {
       console.log("Error fetching services:", error);
@@ -158,7 +154,6 @@ const Home = () => {
         throw new Error(`Server responded with status: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Fetched about:", data);
       setAbout(data);
     } catch (error) {
       console.log("Error fetching about:", error);
@@ -169,13 +164,12 @@ const Home = () => {
   const fetchTestimonials = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_DB_URL}/api/testimonials`
+        `${import.meta.env.VITE_DB_URL}/api/testimonials`,
       );
       if (!res.ok) {
         throw new Error(`Server responded with status: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Fetched testimonials:", data);
       setTestimonials(data);
     } catch (error) {
       console.log("Error fetching testimonials:", error);

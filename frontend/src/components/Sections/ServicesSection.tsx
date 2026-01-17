@@ -24,12 +24,6 @@ interface ServiceItem {
 function Services({ services }: ServicesProps) {
   return (
     <div id="services" className="w-full py-10 mt-10 relative overflow-hidden">
-      <img
-        loading="lazy"
-        src="/images/brand_shape.png.webp"
-        alt=""
-        className="absolute right-0 bottom-0 -z-10"
-      />
       <div className="relative w-full flex flex-col sm:flex-row justify-around items-center p-5  sm:p-15  gap-10">
         <FlickeringGrid
           className="absolute inset-0"

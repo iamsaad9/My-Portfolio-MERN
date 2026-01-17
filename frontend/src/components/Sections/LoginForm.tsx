@@ -28,7 +28,8 @@ const LoginForm = () => {
     isLoading: false,
     status: "",
   });
-
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
   const { showlogin, isLogin } = useLoginStore();
 
   const validate = () => {
@@ -80,6 +81,12 @@ const LoginForm = () => {
       });
 
       if (login) {
+        addToast({
+          title: "Logged in Successfully!",
+          color: "success",
+          variant: "bordered",
+        });
+        await delay(1500);
         window.location.reload();
       } else {
         addToast({
@@ -236,8 +243,8 @@ const LoginForm = () => {
                 {formLoading.isLoading
                   ? formLoading.status
                   : login
-                  ? "Login"
-                  : "Sign Up"}
+                    ? "Login"
+                    : "Sign Up"}
               </button>
             </div>
 

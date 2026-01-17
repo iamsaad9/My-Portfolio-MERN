@@ -35,7 +35,7 @@ export const AnimatedTestimonials = ({
 
   // Filter approved ones
   const approvedTestimonials = testimonials.filter(
-    (t) => t.status === "approved"
+    (t) => t.status === "approved",
   );
 
   const handleNext = () => {
@@ -48,7 +48,8 @@ export const AnimatedTestimonials = ({
     if (approvedTestimonials.length > 0) {
       setActive(
         (prev) =>
-          (prev - 1 + approvedTestimonials.length) % approvedTestimonials.length
+          (prev - 1 + approvedTestimonials.length) %
+          approvedTestimonials.length,
       );
     }
   };
@@ -80,7 +81,7 @@ export const AnimatedTestimonials = ({
   const hasDataAtAll = testimonials.length > 0;
   const hasApproved = approvedTestimonials.length > 0;
   const userTestimonial = approvedTestimonials.find(
-    (t) => t.email === auth?.user?.email
+    (t) => t.email === auth?.user?.email,
   );
   const hasAlreadySubmitted = !!userTestimonial;
 
@@ -186,7 +187,7 @@ export const AnimatedTestimonials = ({
               </AnimatePresence>
             </div>
           </div>
-          <div className="flex flex-col justify-between py-4">
+          <div className="flex flex-col justify-between md:px-5 gap-2">
             <motion.div
               key={active}
               initial={{ y: 20, opacity: 0 }}
@@ -201,7 +202,7 @@ export const AnimatedTestimonials = ({
                 {approvedTestimonials[active]?.designation}
               </p>
               <motion.p
-                className=" mt-8 h-40 overflow-auto text-lg text-white"
+                className=" mt-8 h-20  md:h-40 overflow-auto text-lg text-white"
                 id="feedbackDiv"
               >
                 {approvedTestimonials[active]?.testimonial
@@ -223,7 +224,7 @@ export const AnimatedTestimonials = ({
                   ))}
               </motion.p>
             </motion.div>
-            <div className="flex gap-4 pt-10 md:pt-0">
+            <div className="flex gap-4 pt-5 sm:pt-10 md:pt-0">
               <button
                 onClick={handlePrev}
                 className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-neutral-800 cursor-pointer"

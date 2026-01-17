@@ -24,8 +24,6 @@ export const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { showlogin } = useLoginStore();
 
-  console.log("Current User:", user);
-
   const handleLogout = async () => {
     try {
       await axios.get(`${import.meta.env.VITE_DB_URL}/auth/logout`, {

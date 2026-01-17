@@ -25,12 +25,12 @@ function ProjectsHeading() {
   const xLeft = useTransform(
     scrollYProgress,
     [0, 1],
-    isMobile ? ["20%", "-20%"] : ["20%", "-50%"]
+    isMobile ? ["20%", "-20%"] : ["20%", "-50%"],
   );
   const xRight = useTransform(
     scrollYProgress,
     [0, 1],
-    isMobile ? ["-20%", "20%"] : ["-20%", "50%"]
+    isMobile ? ["-20%", "20%"] : ["-20%", "50%"],
   );
 
   return (
@@ -48,7 +48,7 @@ function ProjectsHeading() {
 
       <motion.h1
         style={{ x: xLeft }}
-        className={`text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase  self-end `}
+        className={`text-[5rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase  self-end `}
       >
         <GradientText
           text="Greatests"

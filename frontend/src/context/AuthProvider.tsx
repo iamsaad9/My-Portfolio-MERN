@@ -20,7 +20,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_DB_URL;
-    console.log("Fetching from:", `${apiUrl}/auth/status`); // Check this in the browser console
 
     axios
       .get(`${apiUrl}/auth/status`, {

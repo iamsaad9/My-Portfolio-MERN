@@ -90,37 +90,33 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <div className="flex flex-col  items-start  justify-between gap-4">
           <p className="text-xs sm:text-sm md:text-base text-white/60 w-full  leading-relaxed">
             {project.description}
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-            qui quae quo porro, sequi exercitationem accusantium ad cumque natus
-            facilis, dignissimos doloribus soluta officiis ducimus at distinctio
-            harum maiores obcaecati voluptatem illo provident in!
           </p>
 
           <div className="flex gap-2 sm:gap-5 items-center justify-end  w-full ">
-            {/* {project.gitHubLink && ( */}
-            <a href={project.gitHubLink} target="_blank" rel="noreferrer">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <FaGithub className="size-4 sm:size-5 hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>GitHub</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
-            {/* )} */}
-            {/* {project.vercelLink && ( */}
-            <a href={project.vercelLink} target="_blank" rel="noreferrer">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <SiVercel className="size-4 sm:size-5 hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Vercel</p>
-                </TooltipContent>
-              </Tooltip>
-            </a>
-            {/* )} */}
+            {project.gitHubLink && (
+              <a href={project.gitHubLink} target="_blank" rel="noreferrer">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FaGithub className="size-4 sm:size-5 hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>GitHub</p>
+                  </TooltipContent>
+                </Tooltip>
+              </a>
+            )}
+            {project.vercelLink && (
+              <a href={project.vercelLink} target="_blank" rel="noreferrer">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <SiVercel className="size-4 sm:size-5 hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Vercel</p>
+                  </TooltipContent>
+                </Tooltip>
+              </a>
+            )}
           </div>
         </div>
       </div>

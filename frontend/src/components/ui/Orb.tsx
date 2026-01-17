@@ -194,7 +194,8 @@ export default function Orb({
     const container = ctnDom.current as HTMLDivElement | null;
     if (!container) return;
 
-    const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
+    // 1. Switched premultipliedAlpha to true to handle transparency better with the GPU
+    const renderer = new Renderer({ alpha: true, premultipliedAlpha: true });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     container.appendChild(gl.canvas);
@@ -209,7 +210,7 @@ export default function Orb({
           value: new Vec3(
             gl.canvas.width,
             gl.canvas.height,
-            gl.canvas.width / gl.canvas.height
+            gl.canvas.width / gl.canvas.height,
           ),
         },
         hue: { value: hue },
@@ -233,9 +234,35 @@ export default function Orb({
       program.uniforms.iResolution.value.set(
         gl.canvas.width,
         gl.canvas.height,
-        gl.canvas.width / gl.canvas.height
+        gl.canvas.width / gl.canvas.height,
       );
     }
+
+    // 2. Intersection Observer to pause rendering when scrolled away
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) resize(); // Re-sync size when coming back
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(container);
+
+    // 3. WebGL Context Loss Handlers
+    const onContextLost = (e: Event) => {
+      e.preventDefault();
+      cancelAnimationFrame(rafId);
+    };
+    const onContextRestored = () => resize();
+
+    gl.canvas.addEventListener("webglcontextlost", onContextLost, false);
+    gl.canvas.addEventListener(
+      "webglcontextrestored",
+      onContextRestored,
+      false,
+    );
+
     window.addEventListener("resize", resize);
     resize();
 
@@ -273,6 +300,10 @@ export default function Orb({
     let rafId: number;
     const update = (t: number) => {
       rafId = requestAnimationFrame(update);
+
+      // Stop the loop if the component is off-screen to save GPU
+      if (!isVisible) return;
+
       const dt = (t - lastTime) * 0.001;
       lastTime = t;
       program.uniforms.iTime.value = t * 0.001;
@@ -295,13 +326,15 @@ export default function Orb({
 
     return () => {
       cancelAnimationFrame(rafId);
+      observer.disconnect();
       window.removeEventListener("resize", resize);
+      gl.canvas.removeEventListener("webglcontextlost", onContextLost);
+      gl.canvas.removeEventListener("webglcontextrestored", onContextRestored);
       container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("mouseleave", handleMouseLeave);
-      container.removeChild(gl.canvas);
+      if (gl.canvas.parentNode) container.removeChild(gl.canvas);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hue, hoverIntensity, rotateOnHover, forceHoverState, backgroundColor]);
 
   return <div ref={ctnDom} className="orb-container" />;
@@ -345,7 +378,7 @@ function hexToVec3(color: string) {
     return new Vec3(
       parseInt(rgbMatch[1]) / 255,
       parseInt(rgbMatch[2]) / 255,
-      parseInt(rgbMatch[3]) / 255
+      parseInt(rgbMatch[3]) / 255,
     );
   }
 

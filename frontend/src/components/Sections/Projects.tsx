@@ -124,26 +124,6 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                     </motion.div>
                   </div>
                   <div className="flex w-full items-center justify-between">
-                    {/* <motion.span
-                    className="text-xs md:text-sm flex items-center justify-center gap-2"
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    Status –
-                    <div
-                      className={`p-2 lg:px-4 border-2 rounded-full uppercase ${
-                        project.status === "Completed"
-                          ? "border-green-500 text-green-500"
-                          : project.status === "Ongoing"
-                          ? "border-orange-500 text-orange-500"
-                          : "border-red-600 text-red-600"
-                      }`}
-                    >
-                      {project.status}
-                    </div>
-                  </motion.span> */}
-
                     <div className="flex gap-5 px-5 items-center justify-center ">
                       <Tooltip>
                         <TooltipTrigger asChild>

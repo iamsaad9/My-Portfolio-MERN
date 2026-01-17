@@ -31,6 +31,8 @@ const TestimonialForm = () => {
   const { isModalOpen, closeModal, isUpdate, _id } = useModalStore();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showAlert, setShowAlert] = useState(false);
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -128,16 +130,16 @@ const TestimonialForm = () => {
 
     console.log("Submitting Testimonial:", Object.fromEntries(data.entries()));
     try {
+      setIsSubmitting(true);
+
       if (isUpdate && _id) {
         await axios.put(
           `${import.meta.env.VITE_DB_URL}/api/testimonials/${_id}`,
           data,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          },
+          { headers: { "Content-Type": "multipart/form-data" } },
         );
         addToast({
-          title: "Testimonial Updated",
+          title: "Testimonial sent for Approval!",
           color: "success",
           variant: "bordered",
         });
@@ -145,21 +147,18 @@ const TestimonialForm = () => {
         await axios.post(
           `${import.meta.env.VITE_DB_URL}/api/testimonials/`,
           data,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          },
+          { headers: { "Content-Type": "multipart/form-data" } },
         );
         addToast({
-          title: "Testimonial Submitted",
+          title: "Submitted for Approval!",
+          description: "Thank you for your feedback.",
           color: "success",
           variant: "bordered",
         });
       }
-      setFormData({
-        name: "",
-        designation: "",
-        testimonial: "",
-      });
+      await delay(2000);
+
+      setFormData({ name: "", designation: "", testimonial: "" });
       closeModal();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -182,6 +181,8 @@ const TestimonialForm = () => {
         color: "success",
         variant: "bordered",
       });
+      await delay(2000);
+      setShowAlert(false);
       closeModal();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -193,14 +194,6 @@ const TestimonialForm = () => {
   };
 
   useEffect(() => {
-    console.log(
-      "Modal open state changed:",
-      isModalOpen,
-      " ",
-      _id,
-      " ",
-      isUpdate,
-    );
     if (isModalOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -435,9 +428,9 @@ const TestimonialForm = () => {
               <button
                 type="button"
                 onClick={() => setShowAlert(true)}
-                className="mt-5 bg-red-800 text-xs sm:text-base text-white  font-medium rounded-[10px] p-2 cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
+                className="mt-3 px-5 bg-red-800 text-xs sm:text-base text-white  font-medium rounded-[10px] p-2 cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
               >
-                Delete Testimonial
+                Delete
               </button>
             ) : null}
 
