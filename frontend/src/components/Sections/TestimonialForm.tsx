@@ -33,7 +33,7 @@ const TestimonialForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -134,7 +134,7 @@ const TestimonialForm = () => {
           data,
           {
             headers: { "Content-Type": "multipart/form-data" },
-          }
+          },
         );
         addToast({
           title: "Testimonial Updated",
@@ -147,7 +147,7 @@ const TestimonialForm = () => {
           data,
           {
             headers: { "Content-Type": "multipart/form-data" },
-          }
+          },
         );
         addToast({
           title: "Testimonial Submitted",
@@ -175,7 +175,7 @@ const TestimonialForm = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${import.meta.env.VITE_DB_URL}/api/testimonials/${_id}`
+        `${import.meta.env.VITE_DB_URL}/api/testimonials/${_id}`,
       );
       addToast({
         title: "Testimonial Deleted",
@@ -199,7 +199,7 @@ const TestimonialForm = () => {
       " ",
       _id,
       " ",
-      isUpdate
+      isUpdate,
     );
     if (isModalOpen) {
       document.body.style.overflow = "hidden";
@@ -217,7 +217,7 @@ const TestimonialForm = () => {
       const fetchTestimonial = async () => {
         try {
           const response = await axios.get(
-            `${import.meta.env.VITE_DB_URL}/api/testimonials/${_id}`
+            `${import.meta.env.VITE_DB_URL}/api/testimonials/${_id}`,
           );
           const testimonial = response.data;
           setFormData({
@@ -250,7 +250,7 @@ const TestimonialForm = () => {
         {showAlert && (
           <AnimatePresence>
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+              className="fixed px-5 inset-0 z-50 flex items-center justify-center bg-black/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -435,7 +435,7 @@ const TestimonialForm = () => {
               <button
                 type="button"
                 onClick={() => setShowAlert(true)}
-                className="mt-5 bg-red-800 w-[50%] text-white text-[15px] font-medium rounded-[10px] p-2 cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
+                className="mt-5 bg-red-800 text-xs sm:text-base text-white  font-medium rounded-[10px] p-2 cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
               >
                 Delete Testimonial
               </button>
@@ -444,7 +444,7 @@ const TestimonialForm = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-3 bg-linear-to-r from-(--theme_1) to-(--theme_2) text-white text-[15px] font-medium rounded-[10px] p-2 w-full cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
+              className="mt-3 bg-linear-to-r from-(--theme_1) to-(--theme_2) text-white text-xs sm:text-base font-medium rounded-[10px] p-2 w-full cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out content-center"
             >
               {isSubmitting ? (
                 <div className="flex items-center justify-center gap-2">

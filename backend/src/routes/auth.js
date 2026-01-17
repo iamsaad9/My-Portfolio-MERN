@@ -45,7 +45,7 @@ router.get(
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
     });
     res.redirect(process.env.FRONTEND_URL);
   },
@@ -99,7 +99,7 @@ router.post("/login", (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // true in production
-      sameSite: "lax",
+      sameSite: "none",
     });
 
     return res.json({ message: "Logged in successfully", user });

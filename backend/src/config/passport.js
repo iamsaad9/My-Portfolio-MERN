@@ -56,7 +56,6 @@ passport.use(
           return done(null, false, { message: "Invalid email or password." });
         }
 
-        // 2. Check if the user has a password (they might have signed up via Google only)
         if (!user.password) {
           return done(null, false, {
             message: "Please log in using Google/GitHub.",
@@ -73,8 +72,8 @@ passport.use(
       } catch (err) {
         return done(err);
       }
-    }
-  )
+    },
+  ),
 );
 
 passport.use(
@@ -84,8 +83,8 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
     },
-    strategyCallback
-  )
+    strategyCallback,
+  ),
 );
 
 // passport.use(
