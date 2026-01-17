@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User";
 
 const protect = async (req, res, next) => {
-  const token = req.cookies.token; // Look for the cookie we set during login
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ message: "Not authorized, no token" });

@@ -185,9 +185,9 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-10 cursor-pointer rounded-full",
+        "absolute size-5 sm:size-10 cursor-pointer rounded-full",
         orientation === "horizontal"
-          ? "top-1/2 -left-8 -translate-y-1/2"
+          ? "top-1/2  -left-5 sm:-left-8 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -195,7 +195,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft />
+      <ArrowLeft className="size-2 sm:size-4" />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -215,9 +215,9 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-10 cursor-pointer rounded-full",
+        "absolute size-5 sm:size-10 cursor-pointer rounded-full",
         orientation === "horizontal"
-          ? "top-1/2 -right-8 -translate-y-1/2"
+          ? "top-1/2 -right-5 sm:-right-8 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -225,7 +225,7 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight />
+      <ArrowRight className="size-2 sm:size-4" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

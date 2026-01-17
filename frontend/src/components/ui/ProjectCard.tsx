@@ -46,20 +46,14 @@ interface ProjectCardProps {
   project: Project;
 }
 
-const DynamicIcon = ({
-  iconName,
-  size = 70,
-}: {
-  iconName: string;
-  size?: number;
-}) => {
+const DynamicIcon = ({ iconName }: { iconName: string; size?: number }) => {
   const prefix = iconName.slice(0, 2) as keyof typeof iconPacks;
   const pack = iconPacks[prefix];
 
   if (!pack) return null;
 
   const Icon = pack[iconName];
-  return Icon ? <Icon size={size} /> : null;
+  return Icon ? <Icon className="size-4 sm:size-5" /> : null;
 };
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
@@ -75,60 +69,58 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <div className="w-full flex flex-col gap-3 md:gap-5">
         <div className="flex flex-row items-center justify-between gap-3">
-          <h1 className="text-2xl md:text-5xl font-semibold break-words">
+          <h1 className="text-2xl md:text-5xl sm:font-semibold break-words line-clamp-1">
             {project.title}
           </h1>
 
           <div className="flex-shrink-0">
-            <ul className="flex flex-wrap gap-3 md:gap-4">
+            <ul className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
               {project.techStack.map((tech, index) => (
                 <li
                   key={index}
                   className="opacity-80 hover:opacity-100 transition-opacity"
                 >
-                  <DynamicIcon iconName={tech} size={20} />
+                  <DynamicIcon iconName={tech} />
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <p className="text-sm md:text-base text-white/50 w-full md:w-[70%] leading-relaxed">
+        <div className="flex flex-col  items-start  justify-between gap-4">
+          <p className="text-xs sm:text-sm md:text-base text-white/60 w-full  leading-relaxed">
             {project.description}
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
+            qui quae quo porro, sequi exercitationem accusantium ad cumque natus
+            facilis, dignissimos doloribus soluta officiis ducimus at distinctio
+            harum maiores obcaecati voluptatem illo provident in!
           </p>
 
-          <div className="flex gap-5 items-center justify-start md:justify-center w-full ">
-            {project.gitHubLink && (
-              <a href={project.gitHubLink} target="_blank" rel="noreferrer">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <FaGithub
-                      size={20}
-                      className="hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70"
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>GitHub</p>
-                  </TooltipContent>
-                </Tooltip>
-              </a>
-            )}
-            {project.vercelLink && (
-              <a href={project.vercelLink} target="_blank" rel="noreferrer">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <SiVercel
-                      size={20}
-                      className="hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70"
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Vercel</p>
-                  </TooltipContent>
-                </Tooltip>
-              </a>
-            )}
+          <div className="flex gap-2 sm:gap-5 items-center justify-end  w-full ">
+            {/* {project.gitHubLink && ( */}
+            <a href={project.gitHubLink} target="_blank" rel="noreferrer">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <FaGithub className="size-4 sm:size-5 hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>GitHub</p>
+                </TooltipContent>
+              </Tooltip>
+            </a>
+            {/* )} */}
+            {/* {project.vercelLink && ( */}
+            <a href={project.vercelLink} target="_blank" rel="noreferrer">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SiVercel className="size-4 sm:size-5 hover:scale-110 cursor-pointer hover:text-white transition-all duration-200 text-white/70" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Vercel</p>
+                </TooltipContent>
+              </Tooltip>
+            </a>
+            {/* )} */}
           </div>
         </div>
       </div>

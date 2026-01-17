@@ -85,7 +85,7 @@ export const AnimatedTestimonials = ({
   const hasAlreadySubmitted = !!userTestimonial;
 
   return (
-    <div className=" w-[90%] sm:mx-auto md:max-w-3xl p-5 lg:py-10 font-sans antialiased lg:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
+    <div className=" w-[90%] overflow-hidden sm:mx-auto md:max-w-3xl p-5 lg:py-10 font-sans antialiased lg:min-w-4xl md:px-8 lg:px-12 bg-black/50 z-1 border border-white rounded-2xl my-5">
       <div className="flex justify-between items-center text-center mb-10">
         <Shuffle
           text="Testimonials"

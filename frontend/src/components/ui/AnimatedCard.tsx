@@ -102,7 +102,7 @@ export default function AnimateCard({
   return (
     <>
       <style>{customStyles}</style>
-      <div className="card-container w-42 h-60 sm:w-50 sm:h-70 lg:w-60 lg:h-80 relative group shadow-2xl">
+      <div className="card-container w-36 h-50 sm:w-50 sm:h-70 lg:w-60 lg:h-80 relative group shadow-2xl">
         <div className="h-full w-full shadow-xl shadow-[#000000ee] rounded-xl relative">
           <div className="back-blur back-gradient flex justify-center items-center bg-[#151515]">
             <div className="absolute inset-0 back-gradient rounded-xl" />

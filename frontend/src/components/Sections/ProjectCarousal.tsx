@@ -28,7 +28,7 @@ export default function ProjectCarousel({
   specialProjects,
 }: ProjectCarouselProps) {
   return (
-    <div className="w-full p-10 flex justify-center">
+    <div className="w-full p-5 flex justify-center">
       <Carousel className="w-full">
         <CarouselContent>
           {specialProjects.map((p, index) => (

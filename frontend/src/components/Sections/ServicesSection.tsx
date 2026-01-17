@@ -89,7 +89,7 @@ function Services({ services }: ServicesProps) {
         </span>
 
         {services.length !== 0 ? (
-          <div className="w-full p-6 flex justify-center ">
+          <div className="w-full sm:p-6 flex justify-center ">
             <Carousel
               opts={{
                 align: "start",
@@ -100,9 +100,9 @@ function Services({ services }: ServicesProps) {
                 {services.map((item, index) => (
                   <CarouselItem
                     key={index}
-                    className="basis-full lg:basis-1/2 xl:basis-1/2 2xl:basis-1/3"
+                    className="basis-full lg:basis-1/2 xl:basis-1/2 2xl:basis-1/3 "
                   >
-                    <div className="p-1">
+                    <div className="p-1 ">
                       <ThreeDCardDemo item={item} />
                     </div>
                   </CarouselItem>
