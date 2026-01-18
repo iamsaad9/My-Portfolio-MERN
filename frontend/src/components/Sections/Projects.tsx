@@ -47,6 +47,13 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
           more projects
         </span>
       </div>
+      {filteredProjects.length === 0 && (
+        <div className="w-full flex items-center justify-center mt-10">
+          <span className=" text-base sm:text-xl  uppercase font-light   text-white/60 ">
+            No projects found.
+          </span>
+        </div>
+      )}
       <div className="max-w-[90rem] mx-auto mb-10 sm:mb-20 p-5 xl:p-10 ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

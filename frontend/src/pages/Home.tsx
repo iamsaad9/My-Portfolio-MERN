@@ -98,35 +98,43 @@ const Home = () => {
   };
 
   //Fetching all the projects from the backend
-  const filterProjects = (projects: Project[]) => {
-    return projects.filter((p) => !p.isSpecial);
-  };
+  // const filterProjects = (projects: Project[]) => {
+  //   return projects.filter((p) => !p.isSpecial);
+  // };
 
   const getProjectImages = (projects: Project[]): ProjectImages[] => {
     return projects.flatMap((project) => {
       const allUrls = [project.coverImage, ...project.images];
 
       return allUrls.map((url) => ({
-        thumbnail: url, // Wrap each URL in the object structure required
+        thumbnail: url,
       }));
     });
   };
-  const filterSpecialProjects = (projects: Project[]) => {
-    return projects.filter((p) => p.isSpecial);
-  };
+  // const filterSpecialProjects = (projects: Project[]) => {
+  //   return projects.filter((p) => p.isSpecial);
+  // };
 
   const fetchProjects = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_DB_URL}/api/projects`);
-      if (!res.ok) {
+      if (!res.ok)
         throw new Error(`Server responded with status: ${res.status}`);
-      }
-      const data = await res.json();
-      const filteredProjects = filterProjects(data);
-      const specialProjects = filterSpecialProjects(data);
-      setAllProjects(filteredProjects);
-      setSpecialProjects(specialProjects);
-      setProjectImages(getProjectImages(data));
+
+      const data: Project[] = await res.json();
+
+      // 1. Filter for the "Remaining" projects section
+      const normalOnes = data.filter((p) => !p.isSpecial);
+
+      // 2. Filter for the Carousel
+      const specialOnes = data.filter((p) => p.isSpecial);
+
+      // 3. Get all images for HeroParallax
+      const imagesForParallax = getProjectImages(data);
+
+      setAllProjects(normalOnes);
+      setSpecialProjects(specialOnes);
+      setProjectImages(imagesForParallax);
     } catch (error) {
       console.log("Error fetching projects:", error);
       throw error;
@@ -234,23 +242,30 @@ const Home = () => {
         <IntroSection about={about} />
         <IntroSummary />
         <SkillsSection skills={skills} />
-        {allProjects && allProjects.length > 0 && (
+        {/* 1. Hero Parallax: Uses images from ALL projects */}
+        {projectImages.length > 0 && (
           <HeroParallaxDemo projects={projectImages} />
         )}
 
         <Services services={services} />
         <ProjectsHeading />
-        {allProjects && allProjects.length > 0 ? (
+
+        {/* 2. Carousel: Only shows if there are Special projects */}
+        {specialProjects.length > 0 ? (
           <ProjectCarousel specialProjects={specialProjects} />
         ) : (
-          <div className="flex items-center justify-center h-full w-full gap-5 my-10">
-            <p className="text-base sm:text-xl">
-              Something doesnt seem right...
-            </p>
-            <span className="loader"></span>
-          </div>
+          allProjects.length === 0 && (
+            <div className="flex items-center justify-center my-10 gap-5">
+              <p>Loading projects...</p>
+              <span className="loader"></span>
+            </div>
+          )
         )}
-        <ProjectsSection filteredProjects={allProjects} />
+
+        {/* 3. Projects Section: Shows the non-special projects */}
+        {allProjects.length > 0 && (
+          <ProjectsSection filteredProjects={allProjects} />
+        )}
         <AnimatedTestimonialsDemo testimonials={testimonials} />
         <ContactForm />
       </div>
