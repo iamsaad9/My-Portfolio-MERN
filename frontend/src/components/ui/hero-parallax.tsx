@@ -155,11 +155,15 @@ export const ProjectCard = ({
       whileHover={{ y: -20 }}
       className="group/project h-60 w-[15rem] md:h-96 md:w-[30rem] relative shrink-0 rounded-xl overflow-hidden"
     >
-      <img
-        src={project.thumbnail}
-        className="object-cover object-left-top absolute h-full w-full inset-0 cursor-pointer"
-        alt="thumbnail"
-      />
+      <div className="relative h-full w-full overflow-hidden">
+        <img
+          src={project.thumbnail}
+          className="object-cover object-left-top absolute h-full w-full inset-0 cursor-pointer"
+          alt="thumbnail"
+        />
+        {/* The Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40 pointer-events-none"></div>
+      </div>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/project:opacity-20 bg-black transition duration-200 pointer-events-none" />
     </motion.div>
   );

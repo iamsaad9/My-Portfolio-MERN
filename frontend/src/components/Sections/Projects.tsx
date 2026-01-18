@@ -7,6 +7,14 @@ import {
 } from "@/components/ui/tooltip";
 import { FaGithub } from "react-icons/fa";
 import { SiVercel } from "react-icons/si";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
+import * as CiIcons from "react-icons/ci";
+import * as SiIcons from "react-icons/si";
+import * as TbIcons from "react-icons/tb";
+import * as RiIcons from "react-icons/ri";
+import * as DiIcons from "react-icons/di";
+import type { IconType } from "react-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import SuperToggleButton from "../ui/ProjectButton";
 
@@ -27,6 +35,21 @@ interface ProjectProps {
   filteredProjects: Project[];
 }
 
+type IconPack = Record<string, IconType>;
+
+const iconPacks: Record<
+  "Fa" | "Ai" | "Ci" | "Si" | "Tb" | "Ri" | "Di",
+  IconPack
+> = {
+  Fa: FaIcons,
+  Ai: AiIcons,
+  Ci: CiIcons,
+  Si: SiIcons,
+  Tb: TbIcons,
+  Ri: RiIcons,
+  Di: DiIcons,
+};
+
 function ProjectsSection({ filteredProjects }: ProjectProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -38,6 +61,16 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
 
   const handleToggle = (index: number | null) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const DynamicIcon = ({ iconName }: { iconName: string; size?: number }) => {
+    const prefix = iconName.slice(0, 2) as keyof typeof iconPacks;
+    const pack = iconPacks[prefix];
+
+    if (!pack) return null;
+
+    const Icon = pack[iconName];
+    return Icon ? <Icon className="size-4 sm:size-5" /> : null;
   };
 
   return (
@@ -113,51 +146,71 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                       {project.description}
                     </motion.p>
                     <motion.div
-                      className="flex flex-wrap gap-2"
+                      className="flex flex-wrap gap-3 sm:gap-4" // Increased gap for icons
                       initial={{ y: 10, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
-                      {project.techStack.map((tech, idx) => (
-                        <motion.span
-                          key={idx}
-                          className="bg-blue-600 px-3 py-1 rounded-full text-[0.7rem] sm:text-xs lg:text-sm"
-                          whileHover={{ scale: 1.1 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
+                      <div className=" flex border border-white/70 rounded-3xl px-2 backdrop-blur-2xl">
+                        {project.techStack.map((iconName, idx) => (
+                          <Tooltip key={idx}>
+                            <TooltipTrigger asChild>
+                              <motion.div className="p-2 rounded-lg ">
+                                <DynamicIcon iconName={iconName} />
+                              </motion.div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {/* This strips the prefix like "Si" from the name for the tooltip */}
+                              <p>{iconName.replace(/^[A-Z][a-z]/, "")}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        ))}
+                      </div>
                     </motion.div>
                   </div>
-                  <div className="flex w-full items-center justify-between">
-                    <div className="flex gap-5 px-5 items-center justify-center ">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <a href="">
-                            <FaGithub
-                              size={20}
-                              className="hover:scale-110 transition-all duration-200"
-                            />
-                          </a>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>GitHub</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <a href="">
-                            <SiVercel
-                              size={20}
-                              className="hover:scale-110 transition-all duration-200"
-                            />
-                          </a>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Vercel</p>
-                        </TooltipContent>
-                      </Tooltip>
+                  <div className="flex w-full items-center justify-between mt-auto">
+                    <div className="flex gap-5 px-2 items-center justify-center">
+                      {/* Dynamic GitHub Link */}
+                      {project.gitHubLink && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={project.gitHubLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <FaGithub
+                                size={22}
+                                className="text-white/70 hover:text-white hover:scale-110 transition-all duration-200"
+                              />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>GitHub Source</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+
+                      {/* Dynamic Vercel/Live Link */}
+                      {project.vercelLink && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={project.vercelLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <SiVercel
+                                size={20}
+                                className="text-white/70 hover:text-white hover:scale-110 transition-all duration-200"
+                              />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Live Demo</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
                     </div>
                   </div>
                 </motion.div>
