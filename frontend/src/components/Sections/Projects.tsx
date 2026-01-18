@@ -118,18 +118,19 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                   transition={{ duration: 0.3 }}
                 />
                 <motion.div
-                  className={`flex flex-col p-5 lg:p-10 2xl:py-15 backdrop-blur-lg transition-opacity duration-500 gap-5 h-full w-full justify-between items-start absolute inset-0
-                  ${openIndex === index ? "opacity-100" : "opacity-0"} 
-                  group-hover:opacity-100`}
+                  className={`flex flex-col p-5 lg:p-10 2xl:py-15 backdrop-blur-lg transition-opacity duration-500 h-full w-full justify-between items-start absolute inset-0
+  ${openIndex === index ? "opacity-100" : "opacity-0"} 
+  group-hover:opacity-100`}
                   initial={{ opacity: 0 }}
                   animate={{
                     opacity: openIndex === index ? 1 : 0,
                   }}
                   transition={{ duration: 0.5 }}
                 >
-                  <div className="flex flex-col gap-2 sm:gap-5">
+                  {/* TOP SECTION: Title and Description */}
+                  <div className="flex flex-col gap-1 sm:gap-5">
                     <motion.h2
-                      className="text-2xl lg:text-5xl xl:text-5xl  font-bold"
+                      className="text-xl lg:text-5xl xl:text-5xl font-bold"
                       style={{ fontFamily: "Lora, serif" }}
                       initial={{ x: -20 }}
                       animate={{ x: 0 }}
@@ -145,32 +146,35 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                     >
                       {project.description}
                     </motion.p>
+                  </div>
+
+                  {/* BOTTOM SECTION: Tech Stack and Links in one row */}
+                  <div className="flex w-full items-center justify-between mt-auto gap-4">
+                    {/* Tech Stack moved here */}
                     <motion.div
-                      className="flex flex-wrap gap-3 sm:gap-4" // Increased gap for icons
+                      className="flex flex-wrap gap-3"
                       initial={{ y: 10, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <div className=" flex border border-white/70 rounded-3xl px-2 backdrop-blur-2xl">
+                      <div className="flex border border-white/70 rounded-3xl px-1 sm:px-2 backdrop-blur-2xl">
                         {project.techStack.map((iconName, idx) => (
                           <Tooltip key={idx}>
                             <TooltipTrigger asChild>
-                              <motion.div className="p-2 rounded-lg ">
+                              <motion.div className="p-1">
                                 <DynamicIcon iconName={iconName} />
                               </motion.div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              {/* This strips the prefix like "Si" from the name for the tooltip */}
                               <p>{iconName.replace(/^[A-Z][a-z]/, "")}</p>
                             </TooltipContent>
                           </Tooltip>
                         ))}
                       </div>
                     </motion.div>
-                  </div>
-                  <div className="flex w-full items-center justify-between mt-auto">
-                    <div className="flex gap-5 px-2 items-center justify-center">
-                      {/* Dynamic GitHub Link */}
+
+                    {/* Links (GitHub/Vercel) */}
+                    <div className="flex gap-5 px-2 items-center shrink-0">
                       {project.gitHubLink && (
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -191,7 +195,6 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                         </Tooltip>
                       )}
 
-                      {/* Dynamic Vercel/Live Link */}
                       {project.vercelLink && (
                         <Tooltip>
                           <TooltipTrigger asChild>
