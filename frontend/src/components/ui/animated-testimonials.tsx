@@ -116,15 +116,6 @@ export const AnimatedTestimonials = ({
       </div>
 
       {!hasDataAtAll ? (
-        /* CASE 1: Database Error / No Data fetched */
-        <div className="flex flex-col items-center justify-center py-10 gap-5">
-          <p className="text-base sm:text-xl text-white/80 text-center">
-            Something doesn't seem right... <br />
-            <span className="text-sm">Could not fetch testimonials.</span>
-          </p>
-          <span className="loader"></span>
-        </div>
-      ) : !hasApproved ? (
         <div className="flex flex-col items-center justify-center py-10  border-white/20 rounded-xl">
           <p className="text-lg text-white/80 mb-4 text-center">
             No approved testimonials yet. <br /> Be the first to leave one!

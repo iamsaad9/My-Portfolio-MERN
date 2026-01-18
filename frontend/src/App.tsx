@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminLoginPage from "./(private)/admin/login/page";
 import Admin from "./(private)/admin/page";
 import Home from "./pages/Home";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
     </div>
   );

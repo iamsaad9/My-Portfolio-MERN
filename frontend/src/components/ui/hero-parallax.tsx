@@ -44,24 +44,24 @@ export const HeroParallax = ({
   // Use the dynamic movementRange here
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, movementRange]),
-    springConfig
+    springConfig,
   );
   const translateXReverse = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, -movementRange]),
-    springConfig
+    springConfig,
   );
 
   const rotateX = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
+    springConfig,
   );
   const opacity = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
-    springConfig
+    springConfig,
   );
   const rotateZ = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-    springConfig
+    springConfig,
   );
 
   // Adjust vertical lift for mobile
@@ -69,9 +69,9 @@ export const HeroParallax = ({
     useTransform(
       scrollYProgress,
       [0, 0.2],
-      [windowWidth < 768 ? -200 : -500, 500]
+      [windowWidth < 768 ? -200 : -500, 500],
     ),
-    springConfig
+    springConfig,
   );
 
   return (
@@ -134,7 +134,7 @@ export const Header = () => {
       >
         Building With Passion <br /> & Precision
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-10 dark:text-neutral-200">
+      <p className="max-w-2xl text-base md:text-xl mt-10 text-white/60">
         From concept to deployment, delivering reliable solutions using modern
         frameworks and technologies.
       </p>
