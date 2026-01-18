@@ -1,10 +1,7 @@
-import React from "react";
-
 const PrivacyPolicy = () => {
   // --- Update these values ---
   const appName = "My Portfolio";
   const appUrl = "https://saad-masood.vercel.app";
-  const contactEmail = "saad.masood8.sm@gmail.com";
   const lastUpdated = "January 18, 2026";
 
   return (

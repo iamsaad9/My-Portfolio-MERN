@@ -79,7 +79,6 @@ export const AnimatedTestimonials = ({
 
   // Render Logic Helpers
   const hasDataAtAll = testimonials.length > 0;
-  const hasApproved = approvedTestimonials.length > 0;
   const userTestimonial = approvedTestimonials.find(
     (t) => t.email === auth?.user?.email,
   );

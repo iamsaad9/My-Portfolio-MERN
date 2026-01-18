@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import AdminLoginPage from "./(private)/admin/login/page";
-import Admin from "./(private)/admin/page";
 import Home from "./pages/Home";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
