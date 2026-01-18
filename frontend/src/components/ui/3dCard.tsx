@@ -12,7 +12,7 @@ interface ThreeDCardDemoProps {
 export function ThreeDCardDemo({ item }: ThreeDCardDemoProps) {
   return (
     <CardContainer>
-      <CardBody className=" h-auto border-2 rounded-3xl relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]  w-auto sm:w-[30rem]  p-6 sm:py-10   ">
+      <CardBody className=" h-auto border border-white/50 rounded-3xl relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]  w-auto sm:w-[30rem]  p-6 sm:py-10   ">
         <CardItem
           translateZ="50"
           className="text-2xl sm:text-3xl font-semiBold text-white"

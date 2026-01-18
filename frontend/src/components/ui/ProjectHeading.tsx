@@ -41,7 +41,7 @@ function ProjectsHeading() {
     >
       <motion.h1
         style={{ x: xRight, fontFamily: "Lora, serif" }}
-        className={`tracking-tighter text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase self-start text-[var(--bg-secondary)]`}
+        className={`tracking-tighter text-[5rem] sm:text-[7rem] md:text-[8rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[13rem] leading-[1] uppercase self-start text-[var(--bg-secondary)]`}
       >
         Latest &
       </motion.h1>

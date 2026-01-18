@@ -58,7 +58,7 @@ const DynamicIcon = ({ iconName }: { iconName: string; size?: number }) => {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <div className="h-full w-full max-w-7xl flex flex-col gap-3 md:gap-5 p-3 md:p-5 rounded-2xl border-2 border-[#333] mx-auto bg-black/20">
+    <div className="h-full w-full max-w-7xl flex flex-col gap-3 md:gap-5 p-3 md:p-5 rounded-2xl border border-white/50 mx-auto bg-black/20">
       <div className="w-full overflow-hidden rounded-xl">
         <img
           src={project.coverImage}

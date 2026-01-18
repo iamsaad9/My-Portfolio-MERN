@@ -181,9 +181,10 @@ const TestimonialForm = () => {
         color: "success",
         variant: "bordered",
       });
-      await delay(2000);
+      await delay(1000);
       setShowAlert(false);
       closeModal();
+      window.location.reload();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         alert(err.response?.data?.message || "Failed to submit testimonial");

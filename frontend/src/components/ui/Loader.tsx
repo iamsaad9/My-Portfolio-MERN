@@ -58,7 +58,7 @@ const Loader: React.FC = () => {
           </svg>
         </div>
         {isColdStarting && (
-          <p className="mt-2 text-white text-xs sm:text-sm md:text-lg">
+          <p className=" text-white text-xs sm:text-sm md:text-lg">
             Awaking server...This may take a few seconds.
           </p>
         )}

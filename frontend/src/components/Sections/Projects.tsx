@@ -64,7 +64,7 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                   layout: { duration: 0.2 },
                 }}
                 key={index}
-                className="flex flex-col  group md:h-64 lg:h-96 relative rounded-2xl overflow-hidden shadow-lg border-2 border-gray-700 hover:border-gray-500 transition-all duration-300 cursor-pointer"
+                className="flex flex-col  group md:h-64 lg:h-96 relative rounded-2xl overflow-hidden shadow-lg border border-white/60  transition-all duration-300 cursor-pointer"
                 onHoverStart={() => handleToggle(index)}
                 onHoverEnd={() => handleToggle(null)}
                 onClick={() => handleToggle(index)}
