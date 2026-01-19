@@ -34,7 +34,7 @@ function Footer() {
 
         <div className="w-full my-5 pb-20 flex items-center justify-between border-b-1 border-(--secondary-text)">
           <span className="text-(--foreground) text-xs sm:text-sm md:text-base">
-            © 2025 My Portfolio. All rights reserved.{" "}
+            © {new Date().getFullYear()} My Portfolio. All rights reserved.{" "}
             <a
               href="/privacy"
               className="text-xs sm:text-sm md:text-base cursor-pointer text-(--theme_1) hover:font-bold"
