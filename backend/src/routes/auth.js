@@ -58,6 +58,13 @@ router.get("/status", async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Check if it's the admin root
+    if (decoded.id === "admin_root") {
+      return res.json({ name: "Admin", role: "admin", isAdmin: true });
+    }
+
+    // Otherwise, check database for normal user
     const user = await User.findById(decoded.id);
     res.json(user);
   } catch (err) {
@@ -104,6 +111,41 @@ router.post("/login", (req, res, next) => {
 
     return res.json({ message: "Logged in successfully", user });
   })(req, res, next);
+});
+
+// Admin Login Route (Using .env credentials)
+router.post("/admin/login", (req, res) => {
+  const { username, password } = req.body;
+  console.log("Admin login attempt:", username);
+
+  const ADMIN_USER = process.env.ADMIN_USERNAME;
+  const ADMIN_PASS = process.env.ADMIN_PASSWORD;
+
+  // 1. Check if credentials match .env
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    // 2. Create a special Admin token
+    // We use a hardcoded ID or 'admin' to distinguish from regular DB users
+    const token = jwt.sign(
+      { id: "admin_root", role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" },
+    );
+
+    // 3. Set the cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    });
+
+    return res.json({
+      message: "Admin logged in successfully",
+      user: { name: "Admin", role: "admin" },
+    });
+  }
+
+  // 4. If credentials fail
+  return res.status(401).json({ message: "Invalid Admin Credentials" });
 });
 
 // Logout
