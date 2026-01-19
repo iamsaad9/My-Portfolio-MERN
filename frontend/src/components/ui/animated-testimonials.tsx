@@ -114,7 +114,7 @@ export const AnimatedTestimonials = ({
         )}
       </div>
 
-      {!hasDataAtAll ? (
+      {!hasDataAtAll || approvedTestimonials.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-10  border-white/20 rounded-xl">
           <p className="text-lg text-white/80 mb-4 text-center">
             No approved testimonials yet. <br /> Be the first to leave one!

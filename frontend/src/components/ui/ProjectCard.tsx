@@ -67,7 +67,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         />
       </div>
 
-      <div className="w-full flex flex-col gap-3 md:gap-5">
+      <div className="w-full flex flex-col  gap-3 md:gap-5">
         <div className="flex flex-row items-center justify-between gap-3">
           <h1 className="text-2xl md:text-5xl sm:font-semibold break-words line-clamp-1">
             {project.title}

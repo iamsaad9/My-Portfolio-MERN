@@ -87,7 +87,7 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
           </span>
         </div>
       )}
-      <div className="max-w-[90rem] mx-auto mb-10 sm:mb-20 p-5 xl:p-10 ">
+      <div className="max-w-[90rem]  mx-auto mb-10 sm:mb-20 p-5 xl:p-10 ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,7 +104,7 @@ function ProjectsSection({ filteredProjects }: ProjectProps) {
                   layout: { duration: 0.2 },
                 }}
                 key={index}
-                className="flex flex-col  group md:h-64 lg:h-96 relative rounded-2xl overflow-hidden shadow-lg border border-white/60  transition-all duration-300 cursor-pointer"
+                className="flex flex-col  group  md:h-64 lg:h-96 relative rounded-2xl overflow-hidden shadow-lg border border-white/60  transition-all duration-300 cursor-pointer"
                 onHoverStart={() => handleToggle(index)}
                 onHoverEnd={() => handleToggle(null)}
                 onClick={() => handleToggle(index)}
