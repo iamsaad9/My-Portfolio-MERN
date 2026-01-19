@@ -11,6 +11,7 @@ import LoginForm from "./components/Sections/LoginForm.tsx";
 import TestimonialForm from "./components/Sections/TestimonialForm.tsx";
 import { HeroUIProvider } from "@heroui/react";
 import { ToastProvider } from "@heroui/toast";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
@@ -26,5 +27,5 @@ createRoot(document.getElementById("root")!).render(
         </HeroUIProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );

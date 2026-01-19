@@ -8,6 +8,7 @@ interface User {
   googleId?: string;
   email?: string;
   password?: string;
+  role: string;
 }
 
 // 1. Define the shape of your context

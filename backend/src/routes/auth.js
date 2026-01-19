@@ -120,6 +120,7 @@ router.post("/admin/login", (req, res) => {
 
   const ADMIN_USER = process.env.ADMIN_USERNAME;
   const ADMIN_PASS = process.env.ADMIN_PASSWORD;
+  console.log("Expected Admin credentials:", ADMIN_USER, ADMIN_PASS);
 
   // 1. Check if credentials match .env
   if (username === ADMIN_USER && password === ADMIN_PASS) {

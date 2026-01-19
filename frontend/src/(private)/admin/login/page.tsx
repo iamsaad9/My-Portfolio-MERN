@@ -25,9 +25,19 @@ export default function AdminLoginPage() {
       if (res.status === 200) {
         window.location.href = "/admin";
       }
-    } catch (err: any) {
-      // Access the message from your backend response
-      const message = err.response?.data?.message || "Login failed";
+    } catch (err: unknown) {
+      // Access the message from your backend response safely
+      let message = "Login failed";
+      if (axios.isAxiosError(err)) {
+        const data = err.response?.data as { message?: unknown } | undefined;
+        const maybeMessage =
+          data && typeof data.message === "string" ? data.message : undefined;
+        message = maybeMessage ?? err.message ?? message;
+      } else if (err instanceof Error) {
+        message = err.message;
+      } else if (typeof err === "string") {
+        message = err;
+      }
       setError(message);
     } finally {
       setLoading(false);
