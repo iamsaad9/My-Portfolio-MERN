@@ -1,6 +1,36 @@
 import Project from "../../models/Project.js";
 import { uploadToAppwrite } from "../utils/appwriteUpload.js";
 
+const parseTechStack = (input) => {
+  if (Array.isArray(input)) {
+    // handle case where array contains a single JSON-stringified array
+    if (
+      input.length === 1 &&
+      typeof input[0] === "string" &&
+      input[0].trim().startsWith("[")
+    ) {
+      try {
+        const parsed = JSON.parse(input[0]);
+        if (Array.isArray(parsed)) return parsed.map(String);
+      } catch (e) {
+        // fallthrough to return array
+      }
+    }
+    return input.map(String);
+  }
+  if (typeof input === "string") {
+    try {
+      const parsed = JSON.parse(input);
+      if (Array.isArray(parsed)) return parsed.map(String);
+    } catch (e) {}
+    return input
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  return [];
+};
+
 export async function getAllProjects(req, res) {
   try {
     const project = await Project.find().sort({ createdAt: -1 });
@@ -49,7 +79,7 @@ export async function addProject(req, res) {
       gitHubLink,
       vercelLink,
       isSpecial: isSpecial === "true", // Multer sends strings; convert to boolean if needed
-      techStack: Array.isArray(techStack) ? techStack : techStack?.split(","), // Handle string/array input
+      techStack: parseTechStack(techStack),
       startedAt,
       endedAt,
     });
@@ -93,7 +123,6 @@ export async function updateProject(req, res) {
       endedAt,
     } = req.body;
 
-    // If new image uploaded, use Cloudinary URL
     const image = req.file?.path;
 
     const updatedProject = await Project.findByIdAndUpdate(
@@ -105,11 +134,11 @@ export async function updateProject(req, res) {
         gitHubLink,
         vercelLink,
         isSpecial,
-        techStack,
+        techStack: parseTechStack(techStack),
         startedAt,
         endedAt,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedProject) {

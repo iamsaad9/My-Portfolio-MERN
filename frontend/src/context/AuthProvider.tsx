@@ -10,6 +10,7 @@ interface User {
   googleId?: string;
   email?: string;
   password?: string;
+  role: string;
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({

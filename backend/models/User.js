@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   githubId: { type: String },
   avatar: { type: String },
   name: { type: String },
+  role: { type: String, enum: ["admin", "user"], default: "user" },
 });
 
 // Automatically hash password before saving to database

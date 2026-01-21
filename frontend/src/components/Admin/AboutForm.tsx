@@ -152,14 +152,14 @@ const AboutForm = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <Loader2 className="animate-spin text-purple-500" size={40} />
+      <div className="flex justify-center items-center h-64 bg-(--bg-secondary) rounded-2xl">
+        <Loader2 className="animate-spin text-(--theme_1)" size={40} />
       </div>
     );
   }
 
   return (
-    <div className=" w-full mx-auto py-6 space-y-6">
+    <div className=" w-full mx-auto py-6 space-y-6 rounded-2xl">
       {/* Message Alert */}
       {message.text && (
         <div
